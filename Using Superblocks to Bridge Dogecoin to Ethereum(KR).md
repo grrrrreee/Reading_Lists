@@ -13,7 +13,13 @@ The Doge->Eth bridge requires over 10.000 USD in gas (at 450 USD per ether) per 
 
 ## 동기
 
-TBD
+Our first approach to build a Dogecoin-Ethereum bridge was to port BTCRelay to Solidity. BTCRelay requires every new Bitcoin block header to be submitted to the contract in order to validate transactions belonging to a particular block.
+
+For BTCRelay, storing an 80-byte block header costs around 200K gas. It needs to store 144 block headers per day. At a gas price of 10 gwei, this requires spending 0.288 ether per day in storage costs.
+
+The success of Ethereum caused the costs to increase notably: at a valuation of 900 USD per ether, running BTCRelay for one day costs 259.2 USD. We could use a lower gas price, but the fees are higher with increased network usage and our transactions may take a long time to be mined.
+
+Dogecoin generates one block per minute; even assuming the Doge->Eth bridge uses a challenge/response system for scrypt hash verification, this makes the cost of the Doge->Eth bridge ten times that of BTCRelay at the same block header size. In addition to this, Dogecoin is merge mined: block headers are larger, with an average size of 700 bytes, and this data requires extra validations, thus increasing the costs and making them prohibitive.
 
 ## Superblocks (슈퍼블록)
 
@@ -37,7 +43,7 @@ Almost no validations will be done on-chain on superblocks. Superblock들은 cha
 
 ### Relaying transactions 
 
-Doge 토큰을 받기 위해서, a user will not only need to send the Superblocks contract an SPV proof of the transaction that she sent to the lock address, but also an SPV proof that the block this transaction belongs to is part of a certain superblock.
+Doge 토큰을 받기 위해서, 사용자는 lock 주소로 보낸 거래의 SPV 증명 superblock 컨트랙트 뿐 아니라, 해당 거래가 속해 있는 블록의 SPV 증명이 특정 superblock 의 일부라는 것을 증명해야 한다. 
 
 ## Security Assumptions 
 
@@ -71,7 +77,7 @@ We will treat superblocks not containing exactly the main chain blocks for that 
 
 The validation of the superblocks will be done using a challenge-response protocol. Both submitter and challenger will have to make a deposit in ether so as to disincentivize fake submissions. The winner of the challenge will get the loser’s deposit.
 
-When a submitter wins the challenge, she will not recover the deposits immediately but only after the superblock is confirmed by enough future superblocks. (See “Superblock with blocks not in the main chain” attack below).
+제출자가 challenge 에서 승리해도 바로 예치금이 복구되지 않는다. 해당 superblock 이후에 몇 개의 추가적인 superblock 들이 검증된 후 복구된다. (See “Superblock with blocks not in the main chain” attack below).
 
 ## Superblock states
 
@@ -81,7 +87,7 @@ When a submitter wins the challenge, she will not recover the deposits immediate
 - Approved (Final State) : superblock 이 유효하다. 
 - Invalid (Final State) : 제출자가 battle 에서 졌다. 
 
-<image> 
+image 
 
 ### Superblock verification battle 
 
@@ -102,15 +108,15 @@ When a submitter wins the challenge, she will not recover the deposits immediate
 11. 만약 모든 단계가 성공적으로 작동되었고 모든 도전자들이 battle 에서 패배하면 해당 superblock 은 Semi-Approved 상태가 된다.
 12. 만약 제출자가 패배하면, 해당 superblock 은 Invalid 상태가 된다. 
 
-If the submitter loses the battle, then the superblock will be considered invalid immediately and the challenger will be awarded the submitter’s deposit.
+만약 제출자가 battle 에서 패배하면, superblock 은 즉시 유효하지 않은 것으로 판단되고 도전자는 제출자의 예치금을 상금으로 얻는다. 
 
-If the challenger abandons, a new challenger can continue the challenge after making a deposit of her own.
+만약 도전자가 포기하면, 새로운 도전자가 스스로의 예치금을 건 후에, 새로운 도전을 걸 수 있다.
 
-If no challenger won the battle the superblock will be considered semi-approved, but the deposits will be locked until it is confirmed by the following superblocks to be in the main chain.
+만약 모든 도전자가 battle 에서 패배하면 superblock 은 semi-approved 상태가 된다. 하지만, 예치금들은 메인 체인에 들어갈 이후의 superblock 들에 의해서 검증될 때까지 lock 되어 있는다. 
 
-A semi-approved superblock is considered to be in the main chain if new superblocks arrive that have the superblock as ancestor and they have enough accumulated proof of work to beat other proposed superblocks.
+semi-approved superblock is considered to be in the main chain if new superblocks arrive that have the superblock as ancestor and they have enough accumulated proof of work to beat other proposed superblocks.
 
-If the superblock is not in the main chain the submitter’s deposit will be paid to the challenger. In the case of multiple challengers it will be split between all the challengers proportionally to their deposit.
+만약 superblock 이 main chain 에 속해 있지 않게 되면 제출자의 예치금은 도전자에게 지급된다. 여러 명의 도전자들이 있는 경우에는 모든 도전자들이 각자 예치금의 비율에 맞게 지급된다. 
 
 ## Possible attacks 
 
