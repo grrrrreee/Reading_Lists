@@ -31,7 +31,7 @@ We will start with describing a language that helps us treat the smart contract 
 
 a ∈ A 인 플레이어 a 에게는 S → (T ×I)∪{⊥} 라는 전략이 있다. (⊥ 는 플레이어가 아무런 움직임을 일으키지 않았을 때를 의미한다.) strategy assignment S : A → (S → (T × I) ∪ {⊥}) 에서 S 에 따른 smart contract C 의 게임 g는  일련의 움직임들이다. i.e. g ∈ (T × A × I)∗ such that C(g) is defined and g 는 g = ε (빈 게임) 또는 g = g′ ·(t,a,i) 인 상황이다. g′ 는 C에서의 게임이다. 그런데 C 는 C(g′) = (s,o), S(a)(s) = (t,i) 이며 S(a′) = (t′,i′), t′ < t 인데 C(g′ · (t′, a′, i′)) 정의된 a' (a′ ∈ A) 는 없는 상태이다. game 의 길이는 round 의 숫자로 불리운다. 
 
-S:A → (S → (T ×I)∪{⊥}) 에 관한 설명이다. S 에 따른 C 안에 있는 게임 g 중 어느 하나라도 C(g) = (s,o) 를 만족하는 것이 있다면 C ~→ S o 라고 적는다. For a single strategy function s:S→T×I∪{⊥} for a player a∈A we write C~→s o if C~→S o for any S that satisfies S(a) = s. (이것도 화살표가 개판이 되네)
+S:A → (S → (T ×I)∪{⊥}) 에 관한 설명이다. S 에 따른 C 안에 있는 게임 g 중 어느 하나라도 C(g) = (s,o) 를 만족하는 것이 있다면 C ~ → S o 라고 적는다. For a single strategy function s:S→T×I∪{⊥} for a player a∈A we write C~ →s o if C~→S o for any S that satisfies S(a) = s. (이것도 화살표가 개판이 되네)
 
 **Theorem 0.2.** For any function f taking s steps to compute, there is an interactive game with two participants a and b implemented by a smart contract G[a, b, ·, ·, ·] with the following properties:
 
