@@ -13,9 +13,9 @@ TrueBit 은 이 문제를 interactive verification 으로 해결하고자 한다
 
 Having  said  that,  all  analyses  are  equally  applicable  to  bridges  between  blockchains  where  theavailability of blocks can be reasonably assumed.  This means that it can be used to e.g. offload processing volume from the main Ethereum chain to another blockchain (which might even be a proof-of-authority chain) as long as all participants in that chain rightfully assume that block datais available to all potential challengers.
 
-We call TrueBit-light the protocol that does not make an effort to bring honest participants to the network.  We assume that an honest participant is present who is altruistic to a certain degree.  This includes keeping up with the Ethereum network, paying the gas fee and having a certain amountof money to pay for an initial deposit.
+Truebit-light 프로토콜이 정직한 참가자들을 네트워크로 끌어오는 것으로 생각하지 않는다.(의역) 어느 정도 이타적인 참가자가 있는 것으로 가정한다. This includes keeping up with the Ethereum network, paying the gas fee and having a certain amount of money to pay for an initial deposit.
 
-We also simplify the system to a degree to only allow one parallel task.  This might be extended to a constant amount of tasks but would also make the presentation here more complex
+또한 오직 1개의 병렬 작업만을 허용하는 수준으로 시스템을 간소화(simplify) 시킬 것이다. This might be extended to a constant amount of tasks but would also make the presentation here more complex
 
 모든 타임아웃들은 lower bound 이고 ethereum 네트워크의 혼잡을 대비하여 확장되어야만 한다. This means that if you want to claim a timeout to take effect, you have to provide a proof that several  previous  blocks  had  enough  capacity  to  include  a  potential  response  by  the  other  party. Since TrueBit never makes a claim that state transitions take effect in a finite amount of time, this is still consistent with the theory presented below.
 
@@ -75,8 +75,6 @@ Finally, we argue why both players have a strategy to end the game with f(x). Du
 
 Obviously, by responding in time, a can always avert the situation that the game ends with a timeout in a state different from f(x).
 
-If the current state of the game is tp, (l, s1), (h, sa, sb), the strategy is to send a message that contains the internal state of the algorithm computing f at step ⌊ h−l / 2⌋. In doing so, the smart contract will
-end up with a state tp,(l,s1),(l+1,sa,sb) where s1 is the state at step l and sa is the state at step
-l + 1. Since sb ̸= sa and the algorithm computing f is deterministic, b cannot use a message of type (4) to turn the smart contract into state yb. Instead, a uses (4) to make the smart contract output ya = f(x).
+만약 game 의 현 state 가 tp, (l, s1), (h, sa, sb) 이라면, 전략은 ⌊ h−l / 2⌋ 단계에서 알고리즘 컴퓨팅 f 의 내부 상태를 포함한 메세지를 보내는 것이다. 그렇게 함으로써, smart contract 는 상태 tp,(l,s1),(l+1,sa,sb) 에서 끝내게 된다. 여기서 s1 은 l 단계에서의 상태이고 sa 는 l+1 단계에서의 상태이다. sb와 sa 는 같지 않고 알고리즘 컴퓨팅 f 는 결정적이기 때문에, b 는 smart contract 를 yb 의 상태로 바꾸기 위해 (4) 형태의 메세지를 사용할 수 없다. 대신 (4) 를 ya = f(x) 의 smart contract output 을 만들기 위해 사용할 수 있다. 
 
-TODO: Formulate rest of statements and prove them.
+할 일 : 나머지 statement 들을 수식화하고 증명하기.
