@@ -31,7 +31,7 @@ We will start with describing a language that helps us treat the smart contract 
 
 a ∈ A 인 플레이어 a 에게는 S → (T ×I)∪{⊥} 라는 전략이 있다. (⊥ 는 플레이어가 아무런 움직임을 일으키지 않았을 때를 의미한다.) strategy assignment S : A → (S → (T × I) ∪ {⊥}) 에서 S 에 따른 smart contract C 의 게임 g는  일련의 움직임들이다. i.e. g ∈ (T × A × I)∗ such that C(g) is defined and g 는 g = ε (빈 게임) 또는 g = g′ ·(t,a,i) 인 상황이다. g′ 는 C에서의 게임이다. 그런데 C 는 C(g′) = (s,o), S(a)(s) = (t,i) 이며 S(a′) = (t′,i′), t′ < t 인데 C(g′ · (t′, a′, i′)) 정의된 a' (a′ ∈ A) 는 없는 상태이다. game 의 길이는 round 의 숫자로 불리운다. 
 
-S:A → (S → (T ×I)∪{⊥}) 에 관한 설명이다. S 에 따른 C 안에 있는 게임 g 중 어느 하나라도 C(g) = (s,o) 를 만족하는 것이 있다면 C ~→ S o 라고 적는다. For a single strategy function s:S→T×I∪{⊥} for a player a∈A we write C~→s o if C~→S o for any S that satisfies S(a) = s. (이것도 화살표가 개판이 되네)
+S:A → (S → (T ×I)∪{⊥}) 에 관한 설명이다. S 에 따른 C 안에 있는 게임 g 중 어느 하나라도 C(g) = (s,o) 를 만족하는 것이 있다면 C ~ → S o 라고 적는다. For a single strategy function s:S→T×I∪{⊥} for a player a∈A we write C~ →s o if C~→S o for any S that satisfies S(a) = s. (이것도 화살표가 개판이 되네)
 
 **Theorem 0.2.** For any function f taking s steps to compute, there is an interactive game with two participants a and b implemented by a smart contract G[a, b, ·, ·, ·] with the following properties:
 
@@ -77,4 +77,8 @@ Obviously, by responding in time, a can always avert the situation that the game
 
 만약 game 의 현 state 가 tp, (l, s1), (h, sa, sb) 이라면, 전략은 ⌊ h−l / 2⌋ 단계에서 알고리즘 컴퓨팅 f 의 내부 상태를 포함한 메세지를 보내는 것이다. 그렇게 함으로써, smart contract 는 상태 tp,(l,s1),(l+1,sa,sb) 에서 끝내게 된다. 여기서 s1 은 l 단계에서의 상태이고 sa 는 l+1 단계에서의 상태이다. sb와 sa 는 같지 않고 알고리즘 컴퓨팅 f 는 결정적이기 때문에, b 는 smart contract 를 yb 의 상태로 바꾸기 위해 (4) 형태의 메세지를 사용할 수 없다. 대신 (4) 를 ya = f(x) 의 smart contract output 을 만들기 위해 사용할 수 있다. 
 
+<<<<<<< HEAD
 할 일 : 나머지 statement 들을 수식화하고 증명하기.
+=======
+TODO: Formulate rest of statements and prove them.
+>>>>>>> dac043aaf81334ebe06129ffb2676e5e678bd94c
