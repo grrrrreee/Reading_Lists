@@ -9,11 +9,11 @@ chris@ethereum.org
 
 블록체인의 가장 주된 문제점은 그들의 확장성이다: 시간당 발생할 수 있는 계산량은 어느정도 고정되어 있다. 더 많은 참가자가 네트워크에 참여한다고 해도 증가하지 않고, 그 네트워크에 속해 있는 노드들 중 가장 느린 노드에 제한된다. 
 
-TrueBit 은 이 문제를 interactive verification 으로 해결하고자 한다.  It allows more or less arbitrarily complex  computations  to  be  performed  under  the  assumption  that  there  is  at  least  one  honest participant.   It  does  not  require  that  participant  to  be  altruistic,  though.   TrueBit  also  includes some drawbacks, especially the drawback that transactions usually take more time to be acceptedand they can also be delayed arbitrarily by an attacker, as long as this attacker has enough financial resources. 이 시스템은 정확도(correctness) 를 활성도(liveness) 보다 우선시 한다. 최소한 1개의 정직한 참가자가 있다면, 부정확한 computation/transaction 을 포함시키는 것은 불가능하다 하지만 공격자는 옳은 computation/transaction 을 포함시키는 것을 임의로 늦출수는 있다.
+TrueBit 은 이 문제를 interactive verification 으로 해결하고자 한다. 최소한 1명의 정직한 참여자가 있다는 가정하에서 다소 복잡한 계산을 수행한다. 그렇다고해서 참여자들이 이타적인 행동을 할 것 을 요구하지는 않는다.  TrueBit 은 단점도 가지고 있다. 거래가 승인되는데 보통 더 많은 시간이 걸리고 공격자가 재정적 재원이 충분하다면 공격자에 의해서 임의적으로 승인이 지연될 수 있다. 이 시스템은 정확도(correctness) 를 활성도(liveness) 보다 우선시 한다. 최소한 1개의 정직한 참가자가 있다면, 부정확한 computation/transaction 을 포함시키는 것은 불가능하다 하지만 공격자는 옳은 computation/transaction 을 포함시키는 것을 임의로 늦출수는 있다.
 
 본 글에서는 Dogecoin-Ethereum bridge 에 특정하여 서술해보려고 한다. Dogecoin-Ethereum bridge는 Dogecoin 블록체인의 블록들이 Ethereum smart contract 에서 검증되어야 한다. 이 검증을 직접적으로 진행하게 되면 비용이 많이 든다. 그래서, 트루빗을 활용한 off-chain 계산을 할 것입니다. 
 
-Having  said  that,  all  analyses  are  equally  applicable  to  bridges  between  blockchains  where  theavailability of blocks can be reasonably assumed.  This means that it can be used to e.g. offload processing volume from the main Ethereum chain to another blockchain (which might even be a proof-of-authority chain) as long as all participants in that chain rightfully assume that block datais available to all potential challengers.
+Having  said  that,  all  analyses  are  equally  applicable  to  bridges  between  blockchains  where  the availability of blocks can be reasonably assumed.  This means that it can be used to e.g. offload processing volume from the main Ethereum chain to another blockchain (which might even be a proof-of-authority chain) as long as all participants in that chain rightfully assume that block datais available to all potential challengers.
 
 Truebit-light 프로토콜이 정직한 참가자들을 네트워크로 끌어오는 것으로 생각하지 않는다.(의역) 어느 정도 이타적인 참가자가 있는 것으로 가정한다. This includes keeping up with the Ethereum network, paying the gas fee and having a certain amount of money to pay for an initial deposit.
 
@@ -25,9 +25,9 @@ Truebit-light 프로토콜이 정직한 참가자들을 네트워크로 끌어�
 
 TrueBit 컨트랙트는 다음과 같은 속성이 있습니다: 
 
-TrueBit 은 fact claiming component 와 verification game 으로 구성되어 있다. In both cases, we fix a mathematical function f : Σn → Σn which can be implemented on a given machine in s elementary computation steps. This is not a big limitation, since f can be an interpreter for another machine, thus allowing to run arbitrary programs, which have a certain finite running time. Limiting the running time is a crucial component, although this limit can be magnitudes higher than what is possible to compute in a single block of the underlying blockchain.
+TrueBit 은 fact claiming component 와 verification game 으로 구성되어 있다. 두 경우 모두, 수학적인 function f : Σn → Σn 를 fix 한다. function f 는 주어진 machine 에서 s개의 elementary computation step 들로 구현될 수 있다. This is not a big limitation, since f can be an interpreter for another machine, thus allowing to run arbitrary programs, which have a certain finite running time. Limiting the running time is a crucial component, although this limit can be magnitudes higher than what is possible to compute in a single block of the underlying blockchain.
 
-We will start with describing a language that helps us treat the smart contract systems.
+smart contract 시스템을 다루는데 도움이 될 언어를 설명하는 것으로 시작하려고 한다.
 
 **Definition 0.1.** 
 
@@ -99,6 +99,8 @@ Note that the timeouts for messages of type (1), (2) and (3) all start at the sa
 
 Obviously, by responding in time, a can always avert the situation that the game ends with a timeout in a state different from f(x).
 
-만약 game 의 현 state 가 tp, (l, s1), (h, sa, sb) 이라면, 전략은 ⌊ h−l / 2⌋ 단계에서 알고리즘 컴퓨팅 f 의 내부 상태를 포함한 메세지를 보내는 것이다. 그렇게 함으로써, smart contract 는 상태 tp,(l,s1),(l+1,sa,sb) 에서 끝내게 된다. 여기서 s1 은 l 단계에서의 상태이고 sa 는 l+1 단계에서의 상태이다. sb와 sa 는 같지 않고 알고리즘 컴퓨팅 f 는 결정적이기 때문에, b 는 smart contract 를 yb 의 상태로 바꾸기 위해 (4) 형태의 메세지를 사용할 수 없다. 대신 (4) 를 ya = f(x) 의 smart contract output 을 만들기 위해 사용할 수 있다. 
+만약 game 의 현 state 가 tp, (l, s1), (h, sa, sb) 이라면, 전략은 ⌊ h−l / 2⌋ 단계에서 알고리즘 컴퓨팅 f 의 내부 상태를 포함한 메세지를 보내는 것이다. 그렇게 함으로써, smart contract 는 상태 tp,(l,s1),(l+1,sa,sb) 에서 끝내게 된다. 
 
-할 일 : 나머지 statement 들을 수식화하고 증명하기.
+여기서 s1 은 l 단계에서의 상태이고 sa 는 l+1 단계에서의 상태이다. sb와 sa 는 같지 않고 알고리즘 컴퓨팅 f 는 결정적이기 때문에, b 는 smart contract 를 yb 의 상태로 바꾸기 위해 (4) 형태의 메세지를 사용할 수 없다. 대신 (4) 를 ya = f(x) 의 smart contract output 을 만들기 위해 사용할 수 있다. 
+
+할 일 : 나머지 statement 들 수식화하고 증명하기.
