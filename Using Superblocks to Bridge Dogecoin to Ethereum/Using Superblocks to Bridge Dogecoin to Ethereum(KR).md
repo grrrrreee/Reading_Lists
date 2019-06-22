@@ -39,7 +39,7 @@ tradeoff 가 존재하기는 한다 -- 더 많은 블록들이 하나의 superbl
 
 Almost no validations will be done on-chain on superblocks. Superblock들은 challenge/response 시스템에 의하여 검증될 것이다.
 
-이전 superblock 의 정보는 superblock 들끼리 연결하기 위해서 포함되어 있다; superblock 들의 체인이라고 생각하면 될 것이다. This facilitates confirming previous superblocks and ignoring superblocks from small forks that are considered attacks.
+이전 superblock 의 정보는 superblock 들끼리 연결하기 위해서 포함되어 있다; superblock 들의 체인이라고 생각하면 될 것이다. 이전 superblock 들을 confirm 하는 것을 촉진시키고 공격 받을 것이라고 고려되는 작은 fork 들의 superblock 들은 무시하게 한다.
 
 ### Relaying transactions 
 
@@ -69,13 +69,13 @@ Doge 토큰을 받기 위해서, 사용자는 lock 주소로 보낸 거래의 SP
 
 우리는 1시간에 1개의 Supberblock 을 제출할 것이다. (약 60개의 Dogecoin 블록을 대표한다.) 이는 그냥 추가적인 실험을 위한 임의의 결정이다. 
 
-체인 reorg 를 피하기 위해서, superblock은 마지막 블록이 채굴되고 3시간 안에 새로운 superblock 이 채굴되지 않을 것이다. 예를 들어, a superblock sent at 6pm will contain blocks from the [2pm-3pm] interval.
+체인 reorg 를 피하기 위해서, superblock은 마지막 블록이 채굴되고 3시간 안에 새로운 superblock 이 채굴되지 않을 것이다. 예를 들어, 오후 2시에서 3시에 보낸 블록들이 오후 6시에 보내진 superblock 에 담기게 된다.
 
 superblock 승인 최소 3시간 간격은 제출자가 실수로 small fork 를 보내는 것을 확률적으로 최소화한다 ; it is an arbitrary value subject to more evaluations. 
 
-We will treat superblocks not containing exactly the main chain blocks for that period as an attack, since the probability of someone submitting small forks by mistake after 3 hours is negligible.
+We will treat superblocks not containing exactly the main chain blocks for that period as an attack, 왜냐하면 누군가가 실수로 since the probability of someone submitting small forks by mistake after 3 hours is negligible.
 
-The validation of the superblocks will be done using a challenge-response protocol. Both submitter and challenger will have to make a deposit in ether so as to disincentivize fake submissions. The winner of the challenge will get the loser’s deposit.
+superblock 들의 검증은 challenge-response 프로토콜을 사용함으로써 해결된다. submitter 와 challenger 모두 예치금을 내야 한다. 그래야 가짜 submission 을 막을 수 있기 때문이다. challenge 의 승자는 패자의 예치금을 가져가게 된다. 
 
 제출자가 challenge 에서 승리해도 바로 예치금이 복구되지 않는다. 해당 superblock 이후에 몇 개의 추가적인 superblock 들이 검증된 후 복구된다. (See “Superblock with blocks not in the main chain” attack below).
 
@@ -114,7 +114,7 @@ image
 
 만약 모든 도전자가 battle 에서 패배하면 superblock 은 semi-approved 상태가 된다. 하지만, 예치금들은 메인 체인에 들어갈 이후의 superblock 들에 의해서 검증될 때까지 lock 되어 있는다. 
 
-semi-approved superblock is considered to be in the main chain if new superblocks arrive that have the superblock as ancestor and they have enough accumulated proof of work to beat other proposed superblocks.
+새로운 superblock 들이 해당 superblock 을 조상으로 잡은 상태에서 도착하게 되거나 제안된 다른 superblock 들 보다 더 많은 축적된 PoW 가 쌓여있으면 semi-approved superblock 으로 고려될 수 있다. 
 
 만약 superblock 이 main chain 에 속해 있지 않게 되면 제출자의 예치금은 도전자에게 지급된다. 여러 명의 도전자들이 있는 경우에는 모든 도전자들이 각자 예치금의 비율에 맞게 지급된다. 
 
@@ -136,7 +136,7 @@ This minimum time between superblocks should also discourage long range attacks.
 
 ### Superblock with blocks not in the main chain 
 
-One possible attack is to send a superblock that is built in such a way that all the blocks are valid Dogecoin blocks but some of them are not in the current main chain; for example, the last block of the superblock could be an orphaned block mined by the attacker.
+One possible attack is to send a superblock that is built in such a way that all the blocks are valid Dogecoin blocks but some of them are not in the current main chain; 예를 들어, superblock 의 마지막 블록은 공격자에 의해서 채굴된 고아 블록일수도 있다. 
 
 If the superblock contains blocks from a temporary fork, it does not seem possible to challenge it successfully, because all the data will be a valid part of the Doge blockchain (regardless of whether it is part of the Doge main chain).
 
@@ -197,7 +197,7 @@ The Superblock chain should be: S1 (B1, B2), S2 (B3).
 
 ## Conclusion and next steps 
 
-The presented solution appears to be a viable option to minimize gas usage when building a Doge to Ethereum peg. Our next steps are building a prototype and investigating further possible attacks.
+제시된 해결책은 Doge to Ethereum 페그를 만들 때 가스 사용량을 최소화 할 수 있는 실행 가능한 방법 중 하나이다. 다음 단계는 prototype 을 만들고 추가 공격 방법에 대해서 조사하기이다.
 
 ## Acknowledgements 
 
