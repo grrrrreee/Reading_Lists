@@ -7,19 +7,19 @@ Tom Elvis Jedusor</br>
 
 
 </br>
-Bitcoin is the first widely used financial system for which all the necessarydata to validate the system status can be cryptographically verified by anyone. </br>
+Bitcoin is the first widely used financial system for which all the necessary data to validate the system status can be cryptographically verified by anyone. </br>
 </br>
-However, it accomplishes this feat by storing all transactions in a publicdatabase called "the blockchain" and someone who genuinely wishes to checkthis state must download the whole thing and basically replay each transaction,check each one as they go. Meanwhile, most of these transactions have notaffected the actual final state (they create outputs that are destroyeda transaction later).
+However, it accomplishes this feat by storing all transactions in a public database called "the blockchain" and someone who genuinely wishes to check this state must download the whole thing and basically replay each transaction,check each one as they go. Meanwhile, most of these transactions have not affected the actual final state (they create outputs that are destroyed a transaction later).
 
 At the time of this writing, there were nearly 150 million transactions committed in the blockchain, which must be replayed to produce a set ofonly 4 million unspent outputs.
 
-It would be better if an auditor needed only to check data on the outputs themselves, but this is impossible because they are valid if and only if theoutput is at the end of a chain of previous outputs, each signs the next. Inother words, the whole blockchain must be validated to confirm the final state. 
+It would be better if an auditor needed only to check data on the outputs themselves, but this is impossible because they are valid if and only if theoutput is at the end of a chain of previous outputs, each signs the next. In other words, the whole blockchain must be validated to confirm the final state. 
 
 Add to this that these transactions are cryptographically atomic, it is clearwhat outputs go into every transaction and what emerges. The "transaction graph"resulting reveals a lot of information and is subjected to analysis by manycompanies whose business model is to monitor and control the lower classes.This makes it very non-private and even dangerous for people to use. 
 
 Some solutions to this have been proposed. Greg Maxwell discovered to encryptthe amounts, so that the graph of the transaction is faceless but still allowvalidation that the sums are correct [1]. Dr Maxwell also produced CoinJoin,a system for Bitcoin users to combine interactively transactions, confusingthe transaction graph. Nicolas van Saberhagen has developed a system to blindthe transaction entries, goes much further to cloud the transaction graph (aswell as not needed the user interaction) [3]. Later, Shen Noether combinedthe two approaches to obtain "confidential transactions" of Maxwell AND thedarkening of van Saberhagen [4]. 
 
-These solutions are very good and would make Bitcoin very safe to use. Butthe problem of too much data is made even worse. Confidential transactionsrequire multi-kilobyte proofs on every output, and van Saberhagen signaturesrequire every output to be stored for ever, since it is not possible to tellwhen they are truly spent. 
+These solutions are very good and would make Bitcoin very safe to use. Butthe problem of too much data is made even worse. Confidential transactionsrequire multi-kilobyte proofs on every output, and van Saberhagen signatures require every output to be stored for ever, since it is not possible to tellwhen they are truly spent. 
 
 Dr. Maxwell's CoinJoin has the problem of needing interactivity. Dr. Yuan HorasMouton fixed this by making transactions freely mergeable [5], but he needed touse pairing-based cryptography, which is potentially slower and more difficultto trust. He called this "one-way aggregate signatures" (OWAS).OWAS had the good idea to combine the transactions in blocks. 
 
