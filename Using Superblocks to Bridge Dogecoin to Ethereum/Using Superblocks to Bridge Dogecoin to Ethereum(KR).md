@@ -9,17 +9,17 @@ Oscar Guindzberg oscar.guindzberg@gmail.com
 
 ## 개요 
 
-The Doge->Eth bridge requires over 10.000 USD in gas (at 450 USD per ether) per day to keep up with the Doge blockchain. We propose a system where no Doge block headers are submitted to ethereum. Instead, all the headers from Doge blocks mined within the last hour are used to build a Merkle tree whose root is submitted to the Superblocks contract. Verifiers can start a challenge/response process to prove this root wrong.
+Doge 와 ETH 를 이어주는 브릿지의 경우 (이더가 450 달러였을 때) 도지 블록체인과 지속적인 연결을 위해 하루에 가스비로 10달러 이상의 돈이 요구된다. 우리는 도지 블록 헤더가 이더리움에 제출되지 않아도 되는 시스템을 제안하려고 한다. Instead, all the headers from Doge blocks mined within the last hour are used to build a Merkle tree whose root is submitted to the Superblocks contract. 검증자는 challenge/response 를 시작하여 제출된 루트 값의 정오답 여부를 확인할 수 있다. 
 
 ## 동기
 
-Our first approach to build a Dogecoin-Ethereum bridge was to port BTCRelay to Solidity. BTCRelay requires every new Bitcoin block header to be submitted to the contract in order to validate transactions belonging to a particular block.
+Dogecoin-Ethereum 브릿지를 만드는데 있어서 첫 접근법은 BTCRealay 를 Solidity 로 포트하는 것이었다. BTCRelay 는 모든 새로운 비트코인 블록 헤더가 컨트랙트에 제출될 수 있게 하고 이로써 특정 블록에 거래가 있음을 검증할 수 있게된다.
 
-For BTCRelay, storing an 80-byte block header costs around 200K gas. It needs to store 144 block headers per day. At a gas price of 10 gwei, this requires spending 0.288 ether per day in storage costs.
+BTCRelay 의 경우에는, 80 byte 의 블록 헤더를 저장하는 200k 가스가 소비된다. 이 블록헤더가 매일 144개 저장되어야 한다. 가스 가격은 10 gwei 일 때, 스토리지 저장으로만 하루에 0.288 이더를 소비하게 된다. 
 
-The success of Ethereum caused the costs to increase notably: at a valuation of 900 USD per ether, running BTCRelay for one day costs 259.2 USD. We could use a lower gas price, but the fees are higher with increased network usage and our transactions may take a long time to be mined.
+The success of Ethereum caused the costs to increase notably: 이더당 900 달러 일때 BTCRelay 운영을 하는데 있어서 하루에 259.2 달러가 소비된다. We could use a lower gas price, but the fees are higher with increased network usage and our transactions may take a long time to be mined.
 
-Dogecoin generates one block per minute; even assuming the Doge->Eth bridge uses a challenge/response system for scrypt hash verification, this makes the cost of the Doge->Eth bridge ten times that of BTCRelay at the same block header size. In addition to this, Dogecoin is merge mined: block headers are larger, with an average size of 700 bytes, and this data requires extra validations, thus increasing the costs and making them prohibitive.
+도지코인은 1분에 1개씩 블록을 생성한다;  Dogecoin generates one block per minute; even assuming the Doge->Eth bridge uses a challenge/response system for scrypt hash verification, this makes the cost of the Doge->Eth bridge ten times that of BTCRelay at the same block header size. 이에 더해서, 도지코인은 merge mined 된다 : 블록 헤더는 더 크고, 평균 700 byte 이고 이 데이터는 추가적인 검증을 필요로 한다 그리고 이것이 비용을 증가 시키고 prohibitive 하게 만든다. 
 
 ## Superblocks (슈퍼블록)
 
@@ -128,7 +128,7 @@ This requirements also prevent when an attacker creates an arbitrarily long fork
 
 ### Attacker submits superblocks while all verifiers are offline 
 
-If all verifiers are offline for a short period of time, an attacker might submit several fake superblocks during that period.
+만약 모든 검증자들이 짧은 기간동안에 오프라인이라면, 공격자는 다수의 가짜 superblock 들을 그 기간 동안 제출 할 수도 있을 것이다. 
 
 In order to reduce the odds of success of this attack, no more than one valid superblock will be accepted every 30 minutes. This means that at least 30 minutes must have passed between a parent and a child.
 
@@ -148,22 +148,21 @@ Assuming the legit “superblock” chain keeps growing, after 24 superblocks (i
 
 ## Questions and Answers 
 
-- How are the deadlines set for each stage?
+- 각 단계별 데드라인이 어떻게 생성되는가? 
 
 The deadlines for each stage are not defined yet. There's a trade-off -- with higher timeouts it’s easier to cause a denial of service by always replying in the last second, a lower timeout can cause an honest participant to miss replying in time.
 
-- Do the deadlines increase on every battle turn?
+- 데드라인은 매 battle turn 마다 상승하나요? 
 
-deadline 은 매 battle 마다 reset 됩니다. 
+deadline 은 매 battle 마다 reset 된다. 
 
-- Are the deadlines fixed? 
+- 데드라인들은 수정되나요? 
 
 There's no max time for the battle to resolve.
 
 - What about new superblocks that arrive when a battle is being held?
 
-
-If a superblock arrives and its parent is in battle, then the new superblock is rejected. Otherwise it is accepted and marked as "New".
+만약 superblock 이 도착했는데 그 부모 블록이 battle 중이라면, 새로 도착한 그 superblock 은 거부된다. 그렇지 않은 상황이라면, 승인되고 "New" 라고 표시된다. 
 
 For example, an attacker can challenge an honest superblock and send a competing fake superblock at the same time. It is supposed an honest challenger to challenge the fake superblock. The assumption is that the fake superblock will eventually lose the battle and the honest superblock will win.
 
@@ -201,7 +200,7 @@ The Superblock chain should be: S1 (B1, B2), S2 (B3).
 
 ## Acknowledgements 
 
-Many thanks to Jason Teutsch, Sina Habibian and Sergio Lerner for providing feedback. And Catalina Juarros for proofreading and editing.
+Many thanks to 피드백을 주신 Jason Teutsch, Sina Habibian and Sergio Lerner 님 에게 정말 감사합니다. 감수를 해주신 Catalina Juarros 님 감사합니다.
 
 ## References 
 
