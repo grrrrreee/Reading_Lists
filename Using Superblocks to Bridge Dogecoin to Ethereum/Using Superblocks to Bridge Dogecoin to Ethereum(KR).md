@@ -24,7 +24,7 @@ BTCRelay 의 경우에는, 80 byte 의 블록 헤더를 저장하는 200k 가스
 
 Efficiently Bridging EVM Blockchains 기사에서 영감을 받은 부분이 있다. 비용 절감 하는 방법 중 하나인데, 모든 블록 헤더를 저장하는 것이 아니라, 여러 블록들의 머클트리의 루트 값만을 저장하는 것이다. 
 
-그래서 우리는 일정 범위의 블록들을 대표하는 "superblock(슈퍼블록)" 을 전송하고 저장하는 방법을 제안한다. 이느 아래의 정보들을 포함할 것이다: 
+그래서 우리는 일정 범위의 블록들을 대표하는 "superblock(슈퍼블록)" 을 전송하고 저장하는 방법을 제안한다. 이는 아래의 정보들을 포함할 것이다: 
 
 - 블록 해시값들로 형성된 머클트리의 루트 값 
 - 블록들의 누적 난이도 값 
@@ -86,11 +86,11 @@ superblock 들의 검증은 challenge-response 프로토콜을 사용함으로�
 - Approved (Final State) : superblock 이 유효하다. 
 - Invalid (Final State) : 제출자가 battle 에서 졌다. 
 
-image 
+![1](./1.png)
 
 ### Superblock verification battle 
 
-제출자(submitter) 와 도전자(challenger) will take turns to send messages to the contracts to advance the battle. A failure to reply in a timely manner will be considered as the forfeiture of the battle and the counterpart will be declared as the winner.
+제출자(submitter) 와 도전자(challenger) battle 을 진행하는데 있어서 순서대로 contract 에 메세지를 보낸다. 일정 시간내에 답변을 보내지 않으면 전투 포기로 간주되고 상대편의 승리로 선언된다. 
 
 1. 제출자 (submitter)  : 예치금을 건다. 
 2. 제출자 (submitter)  : superblock 을 보낸다, 예치금은 lock 된다. superblock 상태는 New 가 된다. 
@@ -135,21 +135,21 @@ image
 
 ### Superblock with blocks not in the main chain 
 
-One possible attack is to send a superblock that is built in such a way that all the blocks are valid Dogecoin blocks but some of them are not in the current main chain; 예를 들어, superblock 의 마지막 블록은 공격자에 의해서 채굴된 고아 블록일수도 있다. 
+한가지 가능한 공격 방법은 모두 유효하지만, 그 중 일부는 현재 메인 체인에는 포함되어 있지 않는 도지 블록을 담고 있는 superblock 을 보내는 것이다; 예를 들어, superblock 의 마지막 블록은 공격자에 의해서 채굴된 고아 블록일수도 있다. 
 
 만약 슈퍼블록이 일시적인 포크에 담긴 블록을 담고 있다면, 이에 대한 challenge 는 성공적으로 끝나지 않을 것이다. 왜냐하면 모든 데이터가 도지 블록체인에서는 유효한 것으로 취급되기 때문이다.(그것이 메인 도지 체인의 일부인지 아닌지 여부는 관계없다).
 
-The attacker might even keep sending “fake” superblocks on top of the attack superblock to keep her “fake” chain growing. Each fake superblock may contain just 1 orphaned Doge block mined by the attacker. The cost of mining 1 orphan Doge block per hour is relatively low.
+공격자는 스스로 만든 "가짜" 체인의 지속적인 성장을 위해 "가짜" superblock 을 공격한 블록 위에 지속적으로 보낼 수도 있다. 매 가짜 superblock 은 공격자에 의해서 채굴된 최소 1개의 고아 도지 블록을 포함할 수도 있다. 시간당 1개의 고아 도지 블록을 채굴하는 비용은 상대적으로 낮다. 
 
 superblock 에 challenge 가 걸려왔고 제출자 (i.e. the attacker) 가 battle 에서 이겼다면, 해당 superblock 은 "semi-approved" 으로 취급된다. 예치금은 묶여있을 것이고 아직 superblock 을 거래 relay 에 사용하는 것은 불가능하지만, 이 위에 있는 superblock 들은 승인될 것이다. 
 
-Assuming the legit “superblock” chain keeps growing, after 24 superblocks (i.e. after 24 hours), the challenger can request to get her deposit back and the “semi-approved” superblock to be considered “invalid” because it is not part of the superblock mainchain. On the other hand, the submitter can request to get her deposit back and the “semi-approved” superblock to be considered “approved” if it IS part of the superblock mainchain.
+유효한 "superblock" 체인이 지속적으로 성장한다고 가정한다면, 24개의 superblock 후에 (즉, 24시간 후에) challenger 는 예치금 반환과 "semi-approved" 인 superblock 을 "invalid" 한 것으로 판단하라고 요구할 수 있다. 왜냐하면 더 이는 superblock 메인 체인에 속해 있지 않기 때문이다. 반면, submitter 는 예치금 반환과 "semi-approved" 인 superblock 을 "valid" 한 것으로 판단하라고 요구할 수 있다. 만약, 이것이 superblock 메인체인의 일부라면 말이다. 
 
 ## Questions and Answers 
 
 - 각 단계별 데드라인이 어떻게 생성되는가? 
 
-The deadlines for each stage are not defined yet. There's a trade-off -- with higher timeouts it’s easier to cause a denial of service by always replying in the last second, a lower timeout can cause an honest participant to miss replying in time.
+각 스테이지의 데드라인이 정해져있지는 않다. 트레이드 오프가 있다 -- timeout 이 높으면 이면 항상 마지막 순간에 회신하여 denial of service 하기가 더 쉽고, timeout 이 낮으면 정직한 참여자가 시간내에 답변을 못할 가능성이 있다. 
 
 - 데드라인은 매 battle turn 마다 상승하나요? 
 
@@ -180,18 +180,17 @@ B1 (16:59:58), B2 (17:00:01), B3 (16:59:59), B4 (17:00:02), B5 (18:00:01).
 Superblock chain A: S1 (B1), S2 (B2, B3, B4), S3(B5)
 Superblock chain B: S1 (B1, B2, B3), S2 (B4), S3(B5)
 
-2개의 superblock chain 모두 같은 누적 PoW 를 가지고 있다, 그래서 이들은 지속적으로 경쟁을 할 것이다.
-이러한 문제를 피하기 위해서 ,as benevolent dictators, we establish the rule that superblock chain A is valid and chain B is invalid.
-For example, if we are processing the superblock for blocks between 4pm and 5pm, no blocks are allowed with a timestamp after 5pm.
+2개의 superblock chain 모두 같은 누적 PoW 를 가지고 있다, 그래서 이들은 지속적으로 경쟁을 할 것이다.이러한 문제를 피하기 위해서 ,선의의 독재자처럼, supreblock chain A 가 유효하고 B 는 유효하지 않은 규칙을 하나 만드려고 한다. 예를 들어, 오후 4시부터 5시 사이의 블록에 대한 superblock 을 진행한다면, 그 어떤 블록의 timestamp 도 5시 이후가 되서는 안된다. 
 Note: The superblock might contain (most likely in the first couple of blocks) blocks whose timestamp is before 4pm.
 
 ### Dealing with long periods without blocks 
 
-In the unlikely event that no blocks are produced during an entire hour, the superblock for that hour will be skipped.
-Consider this Doge blockchain:
+예상치 못하게 한 시간동안 블록이 하나도 완성되지 않는 경우에, 해당 시간에서의 superblock 은 생략될 것이다. 
+
+도지 블록체인이 아래와 같다고 해보자 : 
 B1 (16:30:00), B2 (16:45:00), B3 (19:20:00).
 
-The Superblock chain should be: S1 (B1, B2), S2 (B3).
+이 superblock chain 은 다음과 같이 될 것이다 : S1 (B1, B2), S2 (B3).
 
 ## Conclusion and next steps 
 
