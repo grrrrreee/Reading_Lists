@@ -1,15 +1,14 @@
 # Using Superblocks to Bridge Dogecoin to Ethereum
 
-July 31th, 2018 
+July 31th, 2018 </br>
 Revision : 3 
 
-Ismael Bejarano ismael.bejarano@coinfabrik.com 
-
+Ismael Bejarano ismael.bejarano@coinfabrik.com </br>
 Oscar Guindzberg oscar.guindzberg@gmail.com
 
 ## 개요 
 
-Doge 와 ETH 를 이어주는 브릿지의 경우 (이더가 450 달러였을 때) 도지 블록체인과 지속적인 연결을 위해 하루에 가스비로 10달러 이상의 돈이 요구된다. 우리는 도지 블록 헤더가 이더리움에 제출되지 않아도 되는 시스템을 제안하려고 한다. Instead, all the headers from Doge blocks mined within the last hour are used to build a Merkle tree whose root is submitted to the Superblocks contract. 검증자는 challenge/response 를 시작하여 제출된 루트 값의 정오답 여부를 확인할 수 있다. 
+Doge 와 ETH 를 이어주는 브릿지의 경우 (이더가 450 달러였을 때) 도지 블록체인과 지속적인 연결을 위해 하루에 가스비로 10달러 이상의 돈이 요구된다. 우리는 도지 블록 헤더가 이더리움에 제출되지 않아도 되는 시스템을 제안하려고 한다. 대신, 지난 1시간 동안 채굴된 모든 도지 블록들의 헤더들로 머클 트리를 만들어 그 루트 값을 Superblock Contract 에 제출하려고 합니다. 검증자는 challenge/response 를 시작하여 제출된 루트 값의 정오답 여부를 확인할 수 있다. 
 
 ## 동기
 
@@ -17,7 +16,7 @@ Dogecoin-Ethereum 브릿지를 만드는데 있어서 첫 접근법은 BTCRealay
 
 BTCRelay 의 경우에는, 80 byte 의 블록 헤더를 저장하는 200k 가스가 소비된다. 이 블록헤더가 매일 144개 저장되어야 한다. 가스 가격은 10 gwei 일 때, 스토리지 저장으로만 하루에 0.288 이더를 소비하게 된다. 
 
-The success of Ethereum caused the costs to increase notably: 이더당 900 달러 일때 BTCRelay 운영을 하는데 있어서 하루에 259.2 달러가 소비된다. We could use a lower gas price, but the fees are higher with increased network usage and our transactions may take a long time to be mined.
+이더리움의 성공이 엄청난 비용이 증가를 야기한다 : 이더당 900 달러 일때 BTCRelay 운영을 하는데 있어서 하루에 259.2 달러가 소비된다. 더 낮은 가스 값을 사용할 수 있지만, 네트워크 사용량의 증가로 수수료가 높아졌고 높은 수수료를 제출하지 않는다면 해당 거래가 채굴되는데 더 많은 시간이 걸리게 된다. 
 
 도지코인은 1분에 1개씩 블록을 생성한다; 스크립트 해시 검증에 challenge/response 시스템을 사용한다고 해도 같은 블록 헤더 기준으로 Doge -> Eth 브릿지 비용 사용에 BTCRelay 의 10배가 사용된다. 이에 더해서, 도지코인은 merge mined 된다 : 블록 헤더는 더 크고, 평균 700 byte 이고 이 데이터는 추가적인 검증을 필요로 한다 그리고 이것이 비용을 증가 시키고 prohibitive 하게 만든다. 
 
@@ -33,7 +32,7 @@ Efficiently Bridging EVM Blockchains 기사에서 영감을 받은 부분이 있
 - 마지막 superblock 의 타임 스탬프 값 
 - 부모 superblock 의 데이터의 해시 값 
 
-여러 개의 블록들을 그룹화하여 하나의 superblock 을 만들며 비용을 최소화 될 것이다. 매 시간 60개의 700 바이트 블록들을 전송하고, 검증하고 저장하느 대신 오직, 200 바이트가 채 안되는 1개의 superblock 만을 저장하면 된다. 
+여러 개의 블록들을 그룹화하여 하나의 superblock 을 만들며 비용을 최소화 될 것이다. 매 시간 60개의 700 바이트 블록들을 전송하고, 검증하고 저장하는 대신 오직, 200 바이트가 채 안되는 1개의 superblock 만을 저장하면 된다. 
 
 tradeoff 가 존재하기는 한다 -- 더 많은 블록들이 하나의 superblock 에 담기면, 더 많은 비용이 절감되지만 거래 하나를 relaying 하는데 더 많은 시간이 소비된다. 1시간당 1개의 슈퍼블록이 생성되는 것은 임의의 결정일 뿐, 더 많은 데이터가 가용될 때 새롭게 결정될 것이다. 
 
@@ -49,13 +48,13 @@ Doge 토큰을 받기 위해서, 사용자는 lock 주소로 보낸 거래의 SP
 
 우리는 해당 솔루션을 구성하는 요소들(Doge 블록체인, Ethereum 블록체인, Challenge/Response 메카니즘, BtcRelay)은 안전하다고 가정한다. 
 
-- Dogecoin 블록체인의 대다수의 마이너들은 정직하다 : 개인 혹은 특정 그룹의 채굴자들이 가장 긴 메인 Dogecoin 블록체인을 만들 정도로 많은 해시파워를 가지고 있지 않는다. This discourages long range attacks, as any possible fork will have less accumulated difficulty than the main chain.
+- Dogecoin 블록체인의 대다수의 마이너들은 정직하다 : 개인 혹은 특정 그룹의 채굴자들이 가장 긴 메인 Dogecoin 블록체인을 만들 정도로 많은 해시파워를 가지고 있지 않는다. 이는 long range attack 을 저지한다, 왜냐하면 가능성 있는 모든 포크의 누적 난이도가 메인 체인보다 낮기 때문이다. 
 
 - Ethereum 블록체인을 채굴하는 대부분의 주체는 정직하다. 
 
 - 대규모 체인 reorg 는 일어나지 않는다. (100개 이상의)
 
-- 그 어느 누구도 금전적인 피해를 입는 것을 원치 않는다 : 공격을 하는 이유는 이득을 얻기 위함이거나 최소한의 비용으로 피해를 입히기를 원한다. No one is going to cause a small denial of service or another type of network disruption just to lose a lot of money.
+- 그 어느 누구도 금전적인 피해를 입는 것을 원치 않는다 : 공격을 하는 이유는 이득을 얻기 위함이거나 최소한의 비용으로 피해를 입히기를 원한다. 그 누구도 아무 이유없이 특정 상황에 대한 거부나 네트워크 혼란을 야기하지 않는다, 이는 단지 공격하는데 있어서 돈만 소비되기 때문이다. 
 
 - 우리는 블록체인이 가지고 있는 고유의 문제는 해결하지 않으려고 한다. : eclipse attck
 
@@ -73,11 +72,11 @@ Doge 토큰을 받기 위해서, 사용자는 lock 주소로 보낸 거래의 SP
 
 superblock 승인 최소 3시간 간격은 제출자가 실수로 small fork 를 보내는 것을 확률적으로 최소화한다 ; 이는 현재 임의의 값이다. 앞으로 추가적인 평가를 한 후에 수정될 수도 있다.
 
-We will treat superblocks not containing exactly the main chain blocks for that period as an attack, 왜냐하면 누군가가 실수로 since the probability of someone submitting small forks by mistake after 3 hours is negligible.
+우리는 이 기간 동안 정확히 메인 체인의 블록을 포함하지 않은 superblock 들은 공격으로 간주할 것이다, 왜냐하면 누군가가 작은 포크를 실수로 제출할 가능성은 무시할 수 있기 때문이다. 
 
 superblock 들의 검증은 challenge-response 프로토콜을 사용함으로써 해결된다. submitter 와 challenger 모두 예치금을 내야 한다. 그래야 가짜 submission 을 막을 수 있기 때문이다. challenge 의 승자는 패자의 예치금을 가져가게 된다. 
 
-제출자가 challenge 에서 승리해도 바로 예치금이 복구되지 않는다. 해당 superblock 이후에 몇 개의 추가적인 superblock 들이 검증된 후 복구된다. (See “Superblock with blocks not in the main chain” attack below).
+제출자가 challenge 에서 승리해도 바로 예치금이 복구되지 않는다. 해당 superblock 이후에 몇 개의 추가적인 superblock 들이 검증된 후 복구된다.(아래의 “Superblock with blocks not in the main chain” 부분에 더 자세히 설명되어 있다.)
 
 ## Superblock states
 
@@ -100,7 +99,7 @@ image
 5. 제출자 (submitter)  : 슈퍼블록에 모든 블록 해시값들을 array 를 보낸다. (that are used to form the Merkle tree that relates them to superblock root hash). 블록 해시값들과 머클 트리 그리고 루트 해시 조합은 on-chain 에서 검증된다. 
 6. 도전자 (challenger) : 블록 헤더를 요청한다. 
 7. 제출자 (submitter)  : 요청된 블록 헤더와 scrypt hash 값을 전송한다. 블록 헤더는 on-chain 에서 검증된다. 
-8. TrueBit interactive scrypt hash verification off-chain. 
+8. 오프체인에서 트루빗 상호작용 스크립트 해시 검증
 9. 6,7,8단계는 모든 블록들이 전송될 때까지 지속적으로 반복된다. 
 10. 모든 블록이 전송되면 : 
     a. 블록들의 on-chain 누적 난이도가 superblock 의 누적 난이도와 일치하는지 확인한다.
@@ -124,15 +123,15 @@ image
 
 마지막 superblock 의 타임스탬프를 검증에 사용한다. 이렇게 진행하는 이유 중 하나는 정직한 제출자가 제출한 superblock이 유효하지 않은 것으로 취급되는 작은 포크를 낼 가능성을 최소화하기 위해서이다.
 
-This requirements also prevent when an attacker creates an arbitrarily long fork mining blocks with a timestamp in the future.
+이 조건 역시 공격자가 임의의 긴 포크에서 timestamp in the future 로 블록 채굴하는 것을 방지한다. 
 
 ### Attacker submits superblocks while all verifiers are offline 
 
 만약 모든 검증자들이 짧은 기간동안에 오프라인이라면, 공격자는 다수의 가짜 superblock 들을 그 기간 동안 제출 할 수도 있을 것이다. 
 
-In order to reduce the odds of success of this attack, no more than one valid superblock will be accepted every 30 minutes. This means that at least 30 minutes must have passed between a parent and a child.
+이 공격의 성공확률을 낮추기 위해서, 매 30분 안에는 1개 초과의 슈퍼블록의 유효성이 승인되지 않는다. 이는 즉,부모 자식 블록간에  최소한 30분 이상의 시간 차이가 있어야 한다는 것이다.
 
-This minimum time between superblocks should also discourage long range attacks. Someone can mine an arbitrarily long chain from a block in the past, but submitting will take a long time and the main chain should also grow at the same time.
+이런 superblock 간 최소간격 시간은 long range attack 의 동기를 낮춘다. 누군가가 임의의 긴 체인을 과거의 한 블록부터 채굴해 나갈 수 있지만, 제출에는 긴 시간이 걸리고 그 사이에 메인 체인도 같이 성장하고 있기 때문이다. 
 
 ### Superblock with blocks not in the main chain 
 
