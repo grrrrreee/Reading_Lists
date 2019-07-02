@@ -19,7 +19,7 @@ BTCRelay 의 경우에는, 80 byte 의 블록 헤더를 저장하는 200k 가스
 
 The success of Ethereum caused the costs to increase notably: 이더당 900 달러 일때 BTCRelay 운영을 하는데 있어서 하루에 259.2 달러가 소비된다. We could use a lower gas price, but the fees are higher with increased network usage and our transactions may take a long time to be mined.
 
-도지코인은 1분에 1개씩 블록을 생성한다;  Dogecoin generates one block per minute; even assuming the Doge->Eth bridge uses a challenge/response system for scrypt hash verification, this makes the cost of the Doge->Eth bridge ten times that of BTCRelay at the same block header size. 이에 더해서, 도지코인은 merge mined 된다 : 블록 헤더는 더 크고, 평균 700 byte 이고 이 데이터는 추가적인 검증을 필요로 한다 그리고 이것이 비용을 증가 시키고 prohibitive 하게 만든다. 
+도지코인은 1분에 1개씩 블록을 생성한다; 스크립트 해시 검증에 challenge/response 시스템을 사용한다고 해도 같은 블록 헤더 기준으로 Doge -> Eth 브릿지 비용 사용에 BTCRelay 의 10배가 사용된다. 이에 더해서, 도지코인은 merge mined 된다 : 블록 헤더는 더 크고, 평균 700 byte 이고 이 데이터는 추가적인 검증을 필요로 한다 그리고 이것이 비용을 증가 시키고 prohibitive 하게 만든다. 
 
 ## Superblocks (슈퍼블록)
 
@@ -35,9 +35,9 @@ Efficiently Bridging EVM Blockchains 기사에서 영감을 받은 부분이 있
 
 여러 개의 블록들을 그룹화하여 하나의 superblock 을 만들며 비용을 최소화 될 것이다. 매 시간 60개의 700 바이트 블록들을 전송하고, 검증하고 저장하느 대신 오직, 200 바이트가 채 안되는 1개의 superblock 만을 저장하면 된다. 
 
-tradeoff 가 존재하기는 한다 -- 더 많은 블록들이 하나의 superblock 에 담기면, 더 많은 비용이 절감되지만 거래 하나를 relaying 하는데 더 많은 시간이 소비된다. The one hour per superblock is an arbitrary decision that will be reviewed when more data is available.
+tradeoff 가 존재하기는 한다 -- 더 많은 블록들이 하나의 superblock 에 담기면, 더 많은 비용이 절감되지만 거래 하나를 relaying 하는데 더 많은 시간이 소비된다. 1시간당 1개의 슈퍼블록이 생성되는 것은 임의의 결정일 뿐, 더 많은 데이터가 가용될 때 새롭게 결정될 것이다. 
 
-Almost no validations will be done on-chain on superblocks. Superblock들은 challenge/response 시스템에 의하여 검증될 것이다.
+슈퍼블록들은 on-chain 상에서 거의 검증되지 않는다. Superblock들은 challenge/response 시스템에 의하여 검증될 것이다.
 
 이전 superblock 의 정보는 superblock 들끼리 연결하기 위해서 포함되어 있다; superblock 들의 체인이라고 생각하면 될 것이다. 이전 superblock 들을 confirm 하는 것을 촉진시키고 공격 받을 것이라고 고려되는 작은 fork 들의 superblock 들은 무시하게 한다.
 
@@ -71,7 +71,7 @@ Doge 토큰을 받기 위해서, 사용자는 lock 주소로 보낸 거래의 SP
 
 체인 reorg 를 피하기 위해서, superblock은 마지막 블록이 채굴되고 3시간 안에 새로운 superblock 이 채굴되지 않을 것이다. 예를 들어, 오후 2시에서 3시에 보낸 블록들이 오후 6시에 보내진 superblock 에 담기게 된다.
 
-superblock 승인 최소 3시간 간격은 제출자가 실수로 small fork 를 보내는 것을 확률적으로 최소화한다 ; it is an arbitrary value subject to more evaluations. 
+superblock 승인 최소 3시간 간격은 제출자가 실수로 small fork 를 보내는 것을 확률적으로 최소화한다 ; 이는 현재 임의의 값이다. 앞으로 추가적인 평가를 한 후에 수정될 수도 있다.
 
 We will treat superblocks not containing exactly the main chain blocks for that period as an attack, 왜냐하면 누군가가 실수로 since the probability of someone submitting small forks by mistake after 3 hours is negligible.
 
@@ -122,7 +122,7 @@ image
 
 ### Superblock submitted before 3 hours have passed 
 
-We validate using the timestamp from the last block of the superblock. One of the reasons is to minimize the possibility of a small fork causes a honest submitter to send an invalid superblock.
+마지막 superblock 의 타임스탬프를 검증에 사용한다. 이렇게 진행하는 이유 중 하나는 정직한 제출자가 제출한 superblock이 유효하지 않은 것으로 취급되는 작은 포크를 낼 가능성을 최소화하기 위해서이다.
 
 This requirements also prevent when an attacker creates an arbitrarily long fork mining blocks with a timestamp in the future.
 
@@ -138,11 +138,11 @@ This minimum time between superblocks should also discourage long range attacks.
 
 One possible attack is to send a superblock that is built in such a way that all the blocks are valid Dogecoin blocks but some of them are not in the current main chain; 예를 들어, superblock 의 마지막 블록은 공격자에 의해서 채굴된 고아 블록일수도 있다. 
 
-If the superblock contains blocks from a temporary fork, it does not seem possible to challenge it successfully, because all the data will be a valid part of the Doge blockchain (regardless of whether it is part of the Doge main chain).
+만약 슈퍼블록이 일시적인 포크에 담긴 블록을 담고 있다면, 이에 대한 challenge 는 성공적으로 끝나지 않을 것이다. 왜냐하면 모든 데이터가 도지 블록체인에서는 유효한 것으로 취급되기 때문이다.(그것이 메인 도지 체인의 일부인지 아닌지 여부는 관계없다).
 
 The attacker might even keep sending “fake” superblocks on top of the attack superblock to keep her “fake” chain growing. Each fake superblock may contain just 1 orphaned Doge block mined by the attacker. The cost of mining 1 orphan Doge block per hour is relatively low.
 
-If a superblock is challenged and the submitter (i.e. the attacker) wins the battle, the superblock will be considered “semi-approved”. Deposits will be held and it will not yet be possible to use the superblock to relay transactions, but superblocks on top of it will be accepted.
+superblock 에 challenge 가 걸려왔고 제출자 (i.e. the attacker) 가 battle 에서 이겼다면, 해당 superblock 은 "semi-approved" 으로 취급된다. 예치금은 묶여있을 것이고 아직 superblock 을 거래 relay 에 사용하는 것은 불가능하지만, 이 위에 있는 superblock 들은 승인될 것이다. 
 
 Assuming the legit “superblock” chain keeps growing, after 24 superblocks (i.e. after 24 hours), the challenger can request to get her deposit back and the “semi-approved” superblock to be considered “invalid” because it is not part of the superblock mainchain. On the other hand, the submitter can request to get her deposit back and the “semi-approved” superblock to be considered “approved” if it IS part of the superblock mainchain.
 
