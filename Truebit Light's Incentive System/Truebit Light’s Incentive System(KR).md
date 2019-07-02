@@ -1,11 +1,12 @@
-# Truebit Light's Incentive System - Work in Progress - 
+# Truebit Light's Incentive System - Work In Progress
+</br>
 
 Christian Reitwiebner
 chris@ethereum.org
 
 ## page 1
 
-블록체인은 탈중앙화된 상태에서 실행되는 프로그램들이 정확하게 실행되는 것을 합리적으로 확신시켜준다. 거래가 승인되었다는 것을 보장하지 않는다, 또한 승인된 거래가 지속적으로 승인된 상태로 남는다는 것 역시 보장하지 않는다. 하지만 시간이 흐름에 따라서 상태가 바뀔 확률은 지속적으로 감소한다. 
+블록체인은 탈중앙화된 상태에서 실행되는 프로그램들이 정확하게 실행되는 것을 합리적으로 확신시켜준다. 하지만, 거래가 승인되었다는 것을 보장하지 않는다, 또한 승인된 거래가 지속적으로 승인된 상태로 남는다는 것 역시 보장하지 않는다. 하지만 시간이 흐름에 따라서 상태가 바뀔 확률은 지속적으로 감소한다. 
 
 블록체인의 가장 주된 문제점은 그들의 확장성이다: 시간당 발생할 수 있는 계산량은 어느정도 고정되어 있다. 더 많은 참가자가 네트워크에 참여한다고 해도 증가하지 않고, 그 네트워크에 속해 있는 노드들 중 가장 느린 노드에 제한된다. 
 
@@ -13,7 +14,7 @@ TrueBit 은 이 문제를 interactive verification 으로 해결하고자 한다
 
 본 글에서는 Dogecoin-Ethereum bridge 에 특정하여 서술해보려고 한다. Dogecoin-Ethereum bridge는 Dogecoin 블록체인의 블록들이 Ethereum smart contract 에서 검증되어야 한다. 이 검증을 직접적으로 진행하게 되면 비용이 많이 든다. 그래서, 트루빗을 활용한 off-chain 계산을 할 것이다. 
 
-Having  said  that,  모든 분석은 block 의 availability 가 합리적으로 예상될 수 있는 bridge들에게 동등하게 applicable 하다. 이 말은 이것들은 processing volume 을 메인 이더리움 체인에서 다른 체인으로 (그것이 PoA 일수도 있음) offload 하는데 사용될 수 있다는 것이다. 해당 체인에 있는 모든 참가자들이 블록의 세부정보가 모든 잠재적인 도전자들에게도 사용될 수 있는 것임을 rigtfully assume 하고 있는한.
+모든 analysis는 block 의 availability 가 합리적으로 예상될 수 있는 bridge 들에게 동등하게 적용된다. 이 말은 이것들은 processing volume 을 메인 이더리움 체인에서 다른 체인으로 (그것이 PoA 일수도 있음) offload 하는데 사용될 수 있다는 것이다. 해당 체인에 있는 모든 참가자들이 블록의 세부정보가 모든 잠재적인 도전자들에게도 사용될 수 있는 것임을 rigtfully assume 하고 있는한.
 
 Truebit-light 프로토콜이 정직한 참가자들을 네트워크로 끌어오는 것으로 생각하지 않는다.(의역) 어느 정도 이타적인 참가자가 있는 것으로 가정한다. 이는 이더리움 네트워크 유지, 가스비 지불, 예치금으로 두는 일정량의 자금 등을 포함한다. 
 
