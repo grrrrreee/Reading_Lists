@@ -10,7 +10,7 @@ Oscar Guindzberg oscar.guindzberg@gmail.com
 
 Doge 와 ETH 를 이어주는 브릿지의 경우 (이더가 450 달러였을 때) 도지 블록체인과 지속적인 연결을 위해 하루에 가스비로 10달러 이상의 돈이 요구된다. 우리는 도지 블록 헤더가 이더리움에 제출되지 않아도 되는 시스템을 제안하려고 한다. 대신, 지난 1시간 동안 채굴된 모든 도지 블록들의 헤더들로 머클 트리를 만들어 그 루트 값을 Superblock Contract 에 제출하려고 합니다. 검증자는 challenge/response 를 시작하여 제출된 루트 값의 정오답 여부를 확인할 수 있다. 
 
-## 동기
+## 동기 (Motivation)
 
 Dogecoin-Ethereum 브릿지를 만드는데 있어서 첫 접근법은 BTCRealay 를 Solidity 로 포트하는 것이었다. BTCRelay 는 모든 새로운 비트코인 블록 헤더가 컨트랙트에 제출될 수 있게 하고 이로써 특정 블록에 거래가 있음을 검증할 수 있게된다.
 
