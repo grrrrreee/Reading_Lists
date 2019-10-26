@@ -18,7 +18,7 @@ Smart contract development using NeoVM and SmartX -- The Basics
 
 개발 환경설정 과정은 복잡하고 시간이 많이 소요되는 작업일 수 있습니다. 그래서 이 과정은 최대한 swift 하고 편하게 하여 많은 사람들이 어려움을 느끼지 않게 하기 위해 노력했습니다. 이 과정에서 사용될 툴들은 모두 웹기반이고 실용적이며 바로 사용할 수 있습니다. 
 
-먼저, 편의를 극대화 시키기 위해서, 우리는 스마트 컨트랙트를 개발 및 테스팅을 테스트넷에서 진행할 예정입니다. 그리고 이를 통해 프라이빗 체인의 필요성을 없앨 계획입니다. (thereby eliminating the need of a private chain.) A private blockchain network architecture can be set up just as easily on your local environment using Ontology's Punica suite, a set of development tools that allows for smart contract deployment and testing on the private net, but that is beyond the scope of this tutorial.
+먼저, 편의를 극대화 시키기 위해서, 우리는 스마트 컨트랙트를 개발 및 테스팅을 테스트넷에서 진행할 예정입니다. 그리고 이를 통해 프라이빗 체인의 필요성을 없앨 계획입니다. (thereby eliminating the need of a private chain.) 프라이빗 블록체인 네트워크 구조는 로컬 환경에서도 Ontology의 Punica suite를 사용하여 쉽게 설정될 수 있습니다. Punica suite는 프라이빗 넷에서도 스마트 컨트랙트를 배포하고 테스팅 할 수 있는 개발 툴 모음집입니다. 하지만, 해당 과정에서는 사용되지 않습니다.
 
 우리에게 제일 먼저 필요한 것은 웹 브라우저입니다. 그 중에서도 구글 크롬을 추천합니다. 과정에서 사용할 Cyano 지갑이 구글 크롬 플러그인이기 때문입니다.
 Download link -
@@ -54,7 +54,7 @@ height="2.6287871828521436in"}
 ![](media/image4.jpeg){width="7.242424540682415in"
 height="3.5619203849518812in"}
 
-The IDE that we will be using is Ontology's SmartX, a browser-based development environment that supports Python, C\#, and JavaScript(coming soon). We are going to take an in-depth look at the development process using Python, as far as this tutorial is concerned.
+우리가 사용할 IDE는 브라우저 기반의 개발 환경이자 Python, C\#, and JavaScript(coming soon) 를 지원하는 Ontology의 Smart X입니다. We are going to take an in-depth look at the development process using Python, as far as this tutorial is concerned.
 
 NeoVM serves as the execution engine for the programs written using Python in SmartX. SmartX core integrates all of Ontology's APIs, and so all the different functions which allow us to perform blockchain related tasks can be used directly by importing the relevant API, which we will be discussing later in this tutorial.
 
@@ -123,10 +123,10 @@ height="0.8083333333333333in"}
 
 알림: In later versions, built-in functions don't need to be imported and can be called directly.
 
-Let's take a look at the Main()
+이제 Main() 함수를 한번 살펴봅시다 
 function.![](media/image13.jpg){width="5.189394138232721in" height="4.5815594925634295in"}
 
-The Main() function takes two arguments, *operation* and *args*. The *operation* argument is based on the operation to be performed and dictates the function to the executed. The *args* argument helps passing the important information that a function needs to carry out further execution, for example account addresses or input data.
+Main() 함수는 2개의 argument를 취합니다. function takes two arguments, *operation* and *args*. The *operation* argument is based on the operation to be performed and dictates the function to the executed. The *args* argument helps passing the important information that a function needs to carry out further execution, for example account addresses or input data.
 
 Here, clearly there are 11 different functions that can be called depending upon the argument that is passed in Main(). SmartX passes these arguments using the "Options" pane on the bottom right.
 
