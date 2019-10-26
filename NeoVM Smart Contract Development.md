@@ -44,9 +44,7 @@ height="6.191666666666666in"}
 
 <<<<<<< HEAD
 : 테스트넷에서 스마트 컨트랙트 배포 및 테스팅하는 과정은 메인넷의 ONT/ONG의 잔고없이도 진행할 수 있습니다. But, to pay the gas cast of deploying a contract on the test net, you will still need a nominal testnet ONG balance. The gas cost is calculated by taking the product of gas price and gas limit(gas price \* gas limit). Test tokens have been made available for free by Ontology and can be applied for by following
-=======
-: Deploying and testing smart contracts on the test net can be carried out without a mainnet ONT/ONG balance. But, to pay the gas cast of deploying a contract on the test net, you will still need a nominal testnet ONG balance. The gas cost is calculated by taking the product of gas price and gas limit(gas price \* gas limit). Test tokens have been made available for free by Ontology and can be applied for by following
->>>>>>> 8d5adb45449cdc4843081a3700bab90c0731f6cf
+
 given link:
 [[https://developer.ont.io/applyONG]{custom-style="Hyperlink"}](https://developer.ont.io/applyONG)
 
