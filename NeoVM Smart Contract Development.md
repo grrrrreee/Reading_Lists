@@ -18,7 +18,7 @@ Smart contract development using NeoVM and SmartX -- The Basics
 
 개발 환경설정 과정은 복잡하고 시간이 많이 소요되는 작업일 수 있습니다. 그래서 이 과정은 최대한 swift 하고 편하게 하여 많은 사람들이 어려움을 느끼지 않게 하기 위해 노력했습니다. 이 과정에서 사용될 툴들은 모두 웹기반이고 실용적이며 바로 사용할 수 있습니다. 
 
-Firstly, for the sake of simplicity and convenience, we will be testing the contracts we develop on the test net, thereby eliminating the need of a private chain. A private blockchain network architecture can be set up just as easily on your local environment using Ontology's Punica suite, a set of development tools that allows for smart contract deployment and testing on the private net, but that is beyond the scope of this tutorial.
+먼저, 편의를 극대화 시키기 위해서, 우리는 스마트 컨트랙트를 개발 및 테스팅을 테스트넷에서 진행할 예정입니다. 그리고 이를 통해 프라이빗 체인의 필요성을 없앨 계획입니다. (thereby eliminating the need of a private chain.) A private blockchain network architecture can be set up just as easily on your local environment using Ontology's Punica suite, a set of development tools that allows for smart contract deployment and testing on the private net, but that is beyond the scope of this tutorial.
 
 우리에게 제일 먼저 필요한 것은 웹 브라우저입니다. 그 중에서도 구글 크롬을 추천합니다. 과정에서 사용할 Cyano 지갑이 구글 크롬 플러그인이기 때문입니다.
 Download link -
@@ -36,13 +36,13 @@ height="6.191666666666666in"}
 
 만약 아직 계정이 없다면, 새로운 계정을 등록하는 작업을 진행해주십시오. 당신의 개인키와 연상기호 단어는 반드시 안전한 곳에 보관해야 합니다.
 
-Once logged in, export the wallet to an external **.dat** file. This can be done by accessing settings by clicking on the cog in the top right corner. Ensure that it is stored securely. We will use this file later to work with SmartX.
+로그인을 한 후에는 지갑에서 **.dat** 파일을 export 합니다. 오른쪽 상단의 톱니바퀴 모양을 클릭하면 설정 화면으로 넘어가게 됩니다. 이 파일은 안전하게 저장되어야 합니다. 나중에 이 파일은 SmartX와 함께 사용될 것입니다.
 
-Next, change the network setting to TEST-NET. We will be deploying and testing our logic on the test net.
+다음으로,네트워크 세팅을 TEST-NET으로 변경하여 주십시오. 우리의 결과물을 테스트 넷에서 배포하고 테스팅할 것입니다.(?)
 
 ![](media/image2.jpg){width="3.75in" height="6.216666666666667in"}
 
-Note: Deploying and testing smart contracts on the test net can be carried out without a mainnet ONT/ONG balance. But, to pay the gas cast of deploying a contract on the test net, you will still need a nominal testnet ONG balance. The gas cost is calculated by taking the product of gas price and gas limit(gas price \* gas limit). Test tokens have been made available for free by Ontology and can be applied for by following
+: 테스트넷에서 스마트 컨트랙트 배포 및 테스팅하는 과정은 메인넷의 ONT/ONG의 잔고없이도 진행할 수 있습니다. But, to pay the gas cast of deploying a contract on the test net, you will still need a nominal testnet ONG balance. The gas cost is calculated by taking the product of gas price and gas limit(gas price \* gas limit). Test tokens have been made available for free by Ontology and can be applied for by following
 given link:
 [[https://developer.ont.io/applyONG]{custom-style="Hyperlink"}](https://developer.ont.io/applyONG)
 
@@ -110,16 +110,16 @@ The variables declared in this section of the code define the protocol itself an
 
 This line immediately stands out in the upper section of the code.
 
-GetContext() 는 스마트 컨트랙트와 블록체인의 다리 역할을 하는 함수입니다. 해당함수는 It is used when fetching and transmitting data from and to the chain by calling the GET and PUT functions which are a part of the Storage API.
+GetContext() 는 스마트 컨트랙트와 블록체인의 다리 역할을 하는 함수입니다. 해당함수는 Storage API의 일부인 GET과 PUT를 호출하여 체인에 혹은 체인으로부터 정보를 fetching 하거나 transmitting 할 때 사용됩니다. 
 
 We will go through the relevant APIs as we come across the respective functions, and the full set of available APIs in a later section of the tutorial.
 
 ![](media/image12.jpg){width="5.083333333333333in"
 height="0.8083333333333333in"}
 
-Since we're working with the online SmartX IDE, all the APIs and functions are available for use and can be accessed directly by importing at the start of the program. Here, the functions that we import are GetContext(), Get(), Put(), and Delete() from the Storage API, Notify(), CheckWitness() and Base58ToAddress() from the Runtime API and the built-in function concat().
+해당 과정은 SmartX IDE를 사용하고 있기 때문에, 과정에서 사용되는 모든 API들과 함수들은 프로그래밍을 시작할 때 importing하여 바로 접근 및 사용할 수 있습니다. 과정에서 우리가 import 할 함수들은 Runtime API에서 GetContext(), Get(), Put(), and Delete() from the Storage API, Notify(), CheckWitness() Base58ToAddress() 이며 빌트인 함수(built-in function) concat() 입니다. 
 
-Note: In later versions, built-in functions don't need to be imported and can be called directly.
+알림: In later versions, built-in functions don't need to be imported and can be called directly.
 
 Let's take a look at the Main()
 function.![](media/image13.jpg){width="5.189394138232721in" height="4.5815594925634295in"}
@@ -130,11 +130,11 @@ Here, clearly there are 11 different functions that can be called depending upon
 
 -   **init()** **:** init() 함수는 프로그램 논리 구조의 시작점을 설정합니다. 해당 함수는 initializes the definition variables declared at the top based on the values provided. Thus, this is the first function that needs to be executed post deployment.
 
--   **name() :** 해당 함수는 토큰에 설정된 이름을 반환합니다. 이번 "My Token"This function returns the name assigned to the token, "My Token" in this case.
+-   **name() :** 해당 함수는 토큰에 설정된 이름을 반환합니다. 이번 경우에는 "My Token" 입니다. 
 
--   **symbol() :** This function returns the symbol assigned to the token, "MYT" in this case.
+-   **symbol() :** 해당 함수는 토큰의 symbol을 반환합니다. 이번 경우에는 "MYT"입니다.
 
--   **decimals() :** Returns the number of decimal places that designate the precision of valid token values, 8 in this case.
+-   **decimals() :** 유효한 토큰 값의 정확도를 지정하는 소수점을 반환합니다, 이 경우에는 8자리입니다.
 
 -   **totalSupply() :** Returns the total number of tokens assigned while initializing. Denotes the fixed number of tokens allocated for circulation. (Uses SUPPLY\_KEY to fetch the value from the chain, stored earlier during initialization)
 
@@ -150,14 +150,13 @@ Here, clearly there are 11 different functions that can be called depending upon
 
 -   **allowance(owner, spender) :** This function can be used to the amount that the owner account has authorized spender to use. Both arguments in this case are Base58 addresses.
 
-The functions above can be classified into two different types- access functions and utilities. Let us consider the flow of control as these functions are called.
+위에 언급된 함수들은 2가지 종류로 나누어집니다. - 접근형 함수와 유틸리티형입니다. Let us consider the flow of control as these functions are called.
 
 Access functions are primarily used to fetch data post contract deployment. Functions such as name(), symbol(), totalSupply() and balanceOf(acc) allow us to achieve this by using get() function from the Storage API which fetches relevant data from the chain. Let us look at how it is implemented in program logic.
 
 **name() function definition**
 
-![](media/image14.jpg){width="2.1212117235345582in"
-height="0.8444630358705162in"}
+![](media/image14.jpg){width="2.1212117235345582in" height="0.8444630358705162in"}
 
 This is how a simple access function can be defined. The name() function takes no arguments. Even though functions such as name(), symbol() and decimals() do not explicitly call the get() function, after the contract is deployed, all the data is fetched from the chain.
 
@@ -169,7 +168,7 @@ The balanceOf() function takes one argument, a Base58 address which denotes an a
 
 The context allows for data reference on the chain to fetch the account balance value, while the prefixed account address ensures authenticated access. Next, get() returns this data to Main() where it is output to the log window using the notify() function. The totalSupply() function works in a similar fashion.
 
-Note：The balance and approve prefixes are hexadecimal values in ASCII format and can be modified to support your own program logic.
+알림：잔액 및 approve prefixes 은 ASCII 형식의 16진수 값이며 당신의 프로그램 논리 구조에 맞게 변경될 수 있습니다.
 
 Let us look at the utilities in the sample code.
 
@@ -185,11 +184,11 @@ The transfer() function implements the most fundamental transaction feature, tra
 
 Next, the BALANCE\_PREFIX is concatenated to the sender's account address, and balance is retrieved by making a get() call using this address. A quick comparison is made in the next step where the sender account's balance is compared with the amount to be transferred. All three scenarios have been defined clearly.
 
-만약에 잔고가 거래량보다 적다면, 거래는 실패하게 되고, and the control returns to Main() directly.
+만약에 잔고가 거래량보다 적다면, 거래는 실패하게 되고 통제권은 바로 Main() 으로 넘어가게 된다.
 
 If the amount equates to the balance amount exactly, the balance of sender account is set to 0 by calling the delete() method using the sender's prefixed address. This is practically equivalent to using the put() method to manually assign the value 0 to sender's account but using put() method in this case might give rise to security vulnerabilities.
 
-If the balance is higher than the transfer amount, the amount is deducted from the balance by making a put() call and updating the sender accounts balance with the deducted value.
+만약 잔고가 거래량보다 높다면, the amount is deducted from the balance by making a put() call and updating the sender accounts balance with the deducted value.
 
 Next, the receiver's address is prefixed with the BALANCE\_PREFIX, and the prefixed address is used to add the transfer amount to the receiver's account.
 
@@ -237,11 +236,11 @@ Next, the balance of the "from" account is fetched and cross-checked with the tr
 
 The spender's address is then prefixed with the APPROVE\_PREFIX and the approved amount from is fetched using the prefixed address.
 
-The transaction comes next. If the transaction amount is higher than the approved amount the transaction is aborted, and control returns to Main().
+The transaction comes next. 만약 거래 금액이 승인된 금액을 초과한다면, 거래는 중지되고(aborted) 통제권은 Main()함수에게 돌아가게 됩니다. 
 
-If the amount is exactly equal to the approved amount, the transaction amount is deducted from the "from" accounts balance.
+만약에 승인된 금액이 정확히 양과 일치한다면, 거래량은 "보낸 사람"의 계좌 잔고에서 차감됩니다. 
 
-If the approved amount exceeds the transaction amount, the difference is calculated and stored in the ledger for future reference, and the transaction amount is deducted from the "from" account.
+만약 승인된 금액이 거래량을 초과한다면, 그 차액이 계산되어 추후에 참조할 수 있도록 원장에 기록됩니다. 그리고 그 거래량은 "보낸 사람" 계좌 잔고에서 차감됩니다.
 
 The transaction amount is then transferred to the "to" account using the put() function. The event is then recorded and the result with the transaction hash is displayed in the logs section of the IDE.
 
@@ -254,11 +253,11 @@ Practically speaking, this function cam be classified as an access function too 
 
 A key generated by concatenating the prefixed owner address and the spender address is passed to the get() method along with the context to fetch the required allowance value, which is then returned to Main(). The value can then be displayed or used to perform other tasks.
 
-5.  **Deployment and testing**
+5.  **배포와 테스팅**
 
 ![](media/image21.jpg){width="5.175in" height="1.5916666666666666in"}
 
-Once the logic development process completes, we can proceed to compiling our smart contract.
+논리 구조 구현이 완료되고 나면, 이제는 스마트 컨트랙트를 컴파일링 할 차례입니다. 
 
 Upon compiling the smart contract, the following results can be seen in the IDE-
 
@@ -280,7 +279,7 @@ After all the compilation errors have been dealt with and the contract is succes
 
 Here, we fill in the relevant information regarding the contract and proceed. A confirmation window pops up where you can enter the gas price and gas limit.
 
-**Note: The gas limit is precise to 9 decimal places. Thus, 10^9^ units of gas would be equivalent to 1 ONG token with the minimum valid value being 0.000000001.**
+**알림: 가스 한계는 정확히 소수점 9자리까지 포함됩니다. 그렇기에, 10^9^ 가스 unit은 1 ONG 토큰과 일치한다고 볼 수 있습니다. with the minimum valid value being 0.000000001.**
 
 **The wallet automatically sets a suitable limit based on the complexity of the code being compiled and run. But you always have the option to set a limit yourselves. Ensure that limit is higher than the cost, otherwise the contract may fail to deploy or invoke.**
 
@@ -290,7 +289,7 @@ Once deployed successfully, the transaction hash will be displayed in the logs s
 
 ![](media/image23.jpg){width="7.268055555555556in" height="1.6145833333333333in"}
 
-Next, we can proceed to running the contract.
+다음으로, 이제는 컨트랙트를 실행하려고 합니다. 
 
 Before executing other functions, we must first initialize the wallet using init() so as to ensure that it has enough balance to carry out transactions.
 
@@ -327,9 +326,9 @@ Clearly, 50 units of our sample token have been transferred to the receiver's ad
 
 ![](media/image32.jpg){width="4.925in" height="1.6583333333333334in"}
 
-We can convert the hex value to decimal using the converter provided in the tools section.
+이 16진수 형태 값(hex value)을 tools 섹션에 제공된 변환기(converter)를 통하여 decimal 값으로 변환할 수 있습니다. 
 
-The transaction hash can be used to see the transaction details in the Explorer.
+거래 해시 값은 나중에 탐색기에서 거래 세부사항을 보는데에 사용될 수 있습니다. 
 
 ![](media/image33.jpeg){width="7.268055555555556in" height="3.454861111111111in"}
 
