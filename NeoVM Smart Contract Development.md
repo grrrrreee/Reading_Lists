@@ -1,8 +1,8 @@
 ## *NOTE: Ignore the broken links and placeholders for images.*
 
-Smart contract development using NeoVM and SmartX -- The Basics
+NeoVM 과 SmartX 를 이용한 스마트 컨트랙트 개발-- 기본편
 
-1.  **Prerequisites**
+1.  **작업 전 확인사항**
 
 실제 개발 과정을 진행하기 전에, 필요한 툴들을 가지고 있는지 확인해야합니다. 
 
@@ -76,7 +76,7 @@ NeoVM 은 SmartX에서 Python으로 작성된 프로그램을 실행하는 실�
 
 ![](media/image8.jpeg){width="7.268055555555556in" height="3.5375in"}
 
-파이썬을 선택하고 다음 메뉴로 진행하십시오. Here, a list populated with a set of examples and templates of smart contracts will be displayed. You can choose any example and go through the sample code or use it as a base to give structure to your own smart contract logic. For this tutorial we will be looking at the OEP-4 illustration.
+파이썬을 선택하고 다음 메뉴로 진행하십시오. Here, a list populated with a set of examples and templates of smart contracts will be displayed. You can choose any example and go through the sample code or use it as a base to give structure to your own smart contract logic. 해당 과정에서는 OEP-4 형태를 살펴볼 예정입니다.
 
 4.  **프로그램 논리구조 작성 시작**
 
@@ -84,9 +84,9 @@ NeoVM 은 SmartX에서 Python으로 작성된 프로그램을 실행하는 실�
 
 SmartX가 설정되고 작동되기 시작하면 그 화면은 다음과 같을 것입니다. 
 
-Since we have selected the OEP-4 template, the code is already present in the editor area. You may choose to edit this code as you please based on the logic that you're trying to implement. But for the sake of simplicity and staying within the scope of this tutorial we will use the code as it is to ensure uniformity.
+OEP-4 템플릿을 선택하였다면 이미 코드는 쓰여져 있을 것입니다. 물론, 원한다면 해당 코드를 직접 수정하고 원하는대로 구현하고자 하는 바를 나타낼 수도 있습니다. 하지만, 해당 과정은 최대한 간단한 과정을 보여주는 것이 목표이기에 우리는 제공된 코드를 사용하겠습니다.
 
-It is worth taking some time to take a look at the code and the overall structure of the program that we'll be working with.
+다음 단계로 넘어가기 전에, 해당 과정에서 사용될 코드를 살펴보고 전체적인 구조를 한번 파악해보십시오.
 
 ![](media/image10.jpg){width="7.258333333333334in" height="1.525in"}
 
@@ -134,7 +134,7 @@ Here, clearly there are 11 different functions that can be called depending upon
 
 -   **symbol() :** 해당 함수는 토큰의 symbol을 반환합니다. 이번 경우에는 "MYT"입니다.
 
--   **decimals() :** 유효한 토큰 값의 정확도를 지정하는 소수점을 반환합니다, 이 경우에는 8자리입니다.
+-   **decimals() :** 유효한 토큰 값을 정확하게 소수점까지 반환합니다, 이 경우에는 8자리입니다.
 
 -   **totalSupply() :** Returns the total number of tokens assigned while initializing. Denotes the fixed number of tokens allocated for circulation. (Uses SUPPLY\_KEY to fetch the value from the chain, stored earlier during initialization)
 
@@ -146,9 +146,9 @@ Here, clearly there are 11 different functions that can be called depending upon
 
 -   **transferFrom(spender, from\_acc, to\_acc, amount) :** 송신자는 \_acc address에서 해당하는 양을 받아서 \_acc address에 전송을 합니다.
 
--   **approve(owner, spender, amount) :** The owner authorizes the spender to use a certain amount of tokens from their own account. Both the owner and spender arguments here are Base58 addresses and the amount specifies the amount that the spender is authorized to spend.
+-   **approve(owner, spender, amount) :** The owner authorizes the spender to use a certain amount of tokens from their own account. 여기서 소유자와 소비자는 모두 Base58 주소와 소비자가 허가받은 양을 인수로 사용합니다.
 
--   **allowance(owner, spender) :** This function can be used to the amount that the owner account has authorized spender to use. Both arguments in this case are Base58 addresses.
+-   **allowance(owner, spender) :** This function can be used to the amount that the owner account has authorized spender to use. 이 경우에는 2개의 인수 모두 Base58 주소입니다.
 
 위에 언급된 함수들은 2가지 종류로 나누어집니다. - 접근형 함수와 유틸리티형입니다. Let us consider the flow of control as these functions are called.
 
@@ -276,13 +276,13 @@ The logs section displays the compilers response which includes everything from 
 
 Here, we fill in the relevant information regarding the contract and proceed. A confirmation window pops up where you can enter the gas price and gas limit.
 
-**알림: 가스 한계는 정확히 소수점 9자리까지 포함됩니다. 그렇기에, 10^9^ 가스 unit은 1 ONG 토큰과 일치한다고 볼 수 있습니다. with the minimum valid value being 0.000000001.**
+**알림: 가스 한계는 정확히 소수점 9자리까지 포함됩니다. 그렇기에, 10^9^ 가스 unit은 1 ONG 토큰과 일치한다고 볼 수 있습니다. 표현할 수 있는 값 중 가장 작은 값은 0.000000001 입니다.**
 
 **The wallet automatically sets a suitable limit based on the complexity of the code being compiled and run. But you always have the option to set a limit yourselves. Ensure that limit is higher than the cost, otherwise the contract may fail to deploy or invoke.**
 
 ![](media/image25.jpg){width="1.9874278215223098in" height="3.113636264216973in"}
 
-Once deployed successfully, the transaction hash will be displayed in the logs section and in the result pane in the bottom right.
+성공적으로 배포가 되면, 거래 해시값은 로그 섹션과 오른쪽 하단 결과창에서 확인할 수 있습니다.
 
 ![](media/image23.jpg){width="7.268055555555556in" height="1.6145833333333333in"}
 
@@ -304,7 +304,7 @@ All the results that are displayed in the logs section are in hexadecimal format
 
 ![](media/image28.jpg){width="4.983333333333333in" height="6.258333333333334in"}
 
-거래가 실행될 ㄷ대마다, 거래 해시값이 결과로 반환되고 해당 거래 해시값은 결과를 추적하는데 사용된다. Let us try another transaction, this time with actual tokens being transferred.
+거래가 실행될 때마다, 거래 해시값이 결과로 반환되고 해당 거래 해시값은 결과를 추적하는데 사용된다. Let us try another transaction, this time with actual tokens being transferred.
 
 ![](media/image29.jpg){width="5.108333333333333in" height="5.408333333333333in"}
 
@@ -329,7 +329,7 @@ Clearly, 50 units of our sample token have been transferred to the receiver's ad
 
 ![](media/image33.jpeg){width="7.268055555555556in" height="3.454861111111111in"}
 
-The last section in the right-hand pane, Restful, is the API that is used to communicate with the chain to fetch useful information regarding the chain's status, such as the current block height or the smartcode for an event. Smartcode is basically a JSON based representation of smart contract information. The JSON is generated and returned based on the query, i.e., the function called in the Restful API.
+The last section in the right-hand pane, Restful, is the API that is used to communicate with the chain to fetch useful information regarding the chain's status, such as the current block height or the smartcode for an event. Smartcode 는 사실상 스마트 컨트랙트 정보를 JSON기반으로 표현한 것이다. JSON 은 쿼리를 기반으로 생성되고 반환되며 이때 함수들은 Restful API로 호출된다.
 
 ![](media/image34.jpg){width="4.25in" height="5.99959864391951in"}
 
