@@ -76,13 +76,13 @@ NeoVM 은 SmartX에서 Python으로 작성된 프로그램을 실행하는 실�
 
 ![](media/image8.jpeg){width="7.268055555555556in" height="3.5375in"}
 
-파이썬을 선택하고 다음 메뉴로 진행하십시오. 스마트 컨트랙트의 예시들과 템플릿들이 담겨있는 목록이 나타날 것입니다. 아무 예시를 선택하여 샘플 코드를 실행하거나 이를 기반으로 수정하고 추가하여 나만의 스마트 컨트랙트 논리구조를 구성할 수 있습니다.(?) 해당 과정에서는 OEP-4 형태를 살펴볼 예정입니다.
+파이썬을 선택하고 다음 메뉴로 진행하십시오. 스마트 컨트랙트의 예시들과 템플릿들이 담겨있는 목록이 나타날 것입니다. 아무 예시를 선택하여 샘플 코드를 실행하거나 이를 기반으로 수정하고 추가하여 나만의 스마트 컨트랙트를 만들수 있습니다. 해당 과정에서는 OEP-4 형태를 살펴볼 예정입니다.
 
 4.  **프로그램 논리구조 작성 시작**
 
 ![](media/image9.jpeg){width="7.268055555555556in" height="3.597916666666667in"}
 
-SmartX가 설정되고 작동되기 시작하면 그 화면은 다음과 같을 것입니다. 
+SmartX가 정상적으로 작동하기 시작하면 그 화면은 다음과 같을 것입니다. 
 
 OEP-4 템플릿을 선택하였다면 이미 코드는 쓰여져 있을 것입니다. 물론, 원한다면 해당 코드를 직접 수정하고 원하는대로 구현하고자 하는 바를 나타낼 수도 있습니다. 하지만, 해당 과정은 최대한 간단한 과정을 보여주는 것이 목표이기에 우리는 제공된 코드를 사용하겠습니다.
 
@@ -114,23 +114,23 @@ This line immediately stands out in the upper section of the code.
 
 GetContext() 는 스마트 컨트랙트와 블록체인의 다리 역할을 하는 함수입니다. 해당함수는 Storage API의 일부인 GET과 PUT를 호출하여 체인에 혹은 체인으로부터 정보를 fetching 하거나 transmitting 할 때 사용됩니다. 
 
-We will go through the relevant APIs as we come across the respective functions, and the full set of available APIs in a later section of the tutorial.
+해당과정에사 사용될 관련 API들을 하나씩 살펴보면서 진행할 예정입니다. 또한, 후반부에는 사용가능한 전체 API를 간단하게 알아보겠습니다.
 
 ![](media/image12.jpg){width="5.083333333333333in"
 height="0.8083333333333333in"}
 
-해당 과정은 SmartX IDE를 사용하고 있기 때문에, 과정에서 사용되는 모든 API들과 함수들은 프로그래밍을 시작할 때 importing하여 바로 접근 및 사용할 수 있습니다. 과정에서 우리가 import 할 함수들은 Runtime API에서 GetContext(), Get(), Put(), and Delete() from the Storage API, Notify(), CheckWitness() Base58ToAddress()과 빌트인 함수(built-in function) concat() 입니다. 
+해당 과정은 SmartX IDE를 사용하고 있기 때문에, 과정에서 사용되는 모든 API들과 함수들은 프로그래밍을 시작할 때 import하여 바로 접근 및 사용할 수 있습니다. 과정에서 우리가 import 할 함수들은 Runtime API에서 GetContext(), Get(), Put(), and Delete() from the Storage API, Notify(), CheckWitness() Base58ToAddress()과 기본 내재함수(built-in function) concat() 입니다. 
 
-알림: In later versions, built-in functions don't need to be imported and can be called directly.
+알림: 기본 내재함수는 이후 버전에서는 import할 필요없이 바로 사용할 수 있습니다.
 
 이제 Main() 함수를 한번 살펴봅시다 
 function.![](media/image13.jpg){width="5.189394138232721in" height="4.5815594925634295in"}
 
 Main() 함수는 2개의 argument를 취합니다. *operation* 과 *args* 입니다. The *operation* argument is based on the operation to be performed and dictates the function to the executed. The *args* argument helps passing the important information that a function needs to carry out further execution, for example account addresses or input data.
 
-Here, clearly there are 11 different functions that can be called depending upon the argument that is passed in Main(). SmartX는 이 인수들을 우측 하단에 있는 "Options"르 이용하여 전달합니다.
+Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 정도가 있다. SmartX는 이 인수들을 우측 하단에 있는 "Options"을 이용하여 전달합니다.
 
--   **init()** **:** init() 함수는 프로그램 논리 구조의 시작점을 설정합니다. 해당 함수는 initializes the definition variables declared at the top based on the values provided. Thus, this is the first function that needs to be executed post deployment.
+-   **init()** **:** init() 함수는 프로그램 논리 구조의 시작점을 설정합니다. 해당 함수는 initializes the definition variables declared at the top based on the values provided. 그렇기에, 해당 함수는 배포 후에 가장 먼저 실행되어야 하는 함수입니다.
 
 -   **name() :** 해당 함수는 토큰에 설정된 이름을 반환합니다. 이번 경우에는 "My Token" 입니다. 
 
@@ -144,7 +144,7 @@ Here, clearly there are 11 different functions that can be called depending upon
 
 -   **transfer(from\_acc, to\_acc, amount) :** 해당 함수는 인수로 받은 값만큼을 from\_acc 주소에서 to\_acc 주소로 전송합니다.
 
--   **transferMulti(args) :** The parameter here is an array that contains the same information, i.e., the sender's address, receiver's address, and the amount to be sent, in that sequence at the respective indices. It can be iterated for multiples transactions by passing the respective account addresses and the corresponding amount.
+-   **transferMulti(args) :** 여기에서 인수는 다음과 같은 정보를 담은 array입니다 : 보내는 사람의 주소, 받는 사람의 주소 그리고 거래량 in that sequence at the respective indices. It can be iterated for multiples transactions by passing the respective account addresses and the corresponding amount.
 
 -   **transferFrom(spender, from\_acc, to\_acc, amount) :** 송신자는 \_acc address에서 해당하는 양을 받아서 \_acc address에 전송을 합니다.
 
@@ -184,9 +184,9 @@ The transfer() 함수는 토큰을 한 계정에서 다른 계정으로 전송�
 
 해당 함수는 간단한 길이 검사로 검증을 진행하지만, 원한다면 더 복잡한 논리구조를 개발 및 구현할 수 있습니다. 
 
-Next, the BALANCE\_PREFIX is concatenated to the sender's account address, and balance is retrieved by making a get() call using this address. A quick comparison is made in the next step where the sender account's balance is compared with the amount to be transferred. All three scenarios have been defined clearly.
+다음으로 BALANCE\_PREFIX 가 보내는 사람의 계정 주소와 합쳐집니다. and balance is retrieved by making a get() call using this address. 다음으로 계정의 잔고와 전송될 금액의 비교가 빠르게 이루어집니다. 아래에 3가지 시나리오 모두 명확하게 정의되어 있습니다.
 
-만약에 잔고가 거래량보다 적다면, 거래는 실패하게 되고 통제권은 바로 Main() 으로 넘어가게 된다.
+만약에 잔고가 거래량보다 적다면, 거래는 실패하게 되고 통제권은 바로 Main() 으로 넘어가게 됩니다. 
 
 If the amount equates to the balance amount exactly, the balance of sender account is set to 0 by calling the delete() method using the sender's prefixed address. This is practically equivalent to using the put() method to manually assign the value 0 to sender's account but using put() method in this case might give rise to security vulnerabilities.
 
@@ -212,13 +212,13 @@ The sub-array elements are processed in sets of three such that the first and se
 
 The approve function implements another complex logic wherein an account, namely the "spender" is given the permission to utilize a certain amount in tokens from another account, namely the "owner".
 
-The function first carries out address validation in terms of length, and user authentication for the "owner" who is about to perform the approval.
+해당 함수는 2가지 검사를 진행합니다. 길이로 유효성 검사를 진행하고, 승인을 실행할 수 있는 “소유자”여부로 사용자 검사를 진행합니다.
 
-Next, the amount selected for approval is compared to the available balance in the "owner" account.
+다음으로, 승인된 금액과 “소유자” 계정의 잔고를 비교한다.
 
-만약 잔고에 충분한 양이 있지 않다면 과정은 종료되고 통제권으 Main()에 넘어가게 됩니다. 
+만약 잔고에 충분한 양이 있지 않다면 종료되고 통제권은 Main()에 넘어가게 됩니다. 
 
-만약 잔고에 충분하 양이 있다면, APPROVAL\_PREFIX르 접두로 가진 "소유자" 주소와 "소비자" 주소를 연결한 키가 형성됩니다. It is then added to the ledger using the put() method by passing the context, the above generated key, and the approval amount.
+만약 잔고에 충분한 양이 있다면, APPROVAL\_PREFIX를 접두로 가진 "소유자" 주소와 "소비자" 주소를 연결한 키가 형성됩니다. 다음으로 put()을 이용하여 context, 위에서 언급된 key 그리고 승인 금액이 원장에 전달 및 기록된다.
 
 거래 이벤ㅌ는 ApprovalEvent()방법으로 기록되고 NeoVM엔진이 반환한 거래 해시값이 포함된 결과값은 로그 섹션에 나타나게 됩니다. 
 
@@ -226,9 +226,9 @@ Next, the amount selected for approval is compared to the available balance in t
 
 ![](media/image19.jpg){width="6.85in" height="5.2in"}
 
-transferFrom() 함수는 더 복잡한 논리구조를 실행하고 and carries out a task that may prove to be useful for certain applications.
+transferFrom() 함수는 더 복잡한 논리구조를 실행합니다. 이는 특정 어플리케이션에서 유용하게 사용될 수 있을것입니다.
 
-This function allows a third party, namely the spender, to utilize a certain amount in tokens that are provided from an account that does not designate to their own credentials, basically implementing the same logic as that of the approve() function. It takes four arguments, which are three Byte58 addresses and one transfer amount.
+This function allows a third party, namely the spender, to utilize a certain amount in tokens that are provided from an account that does not designate to their own credentials, basically implementing the same logic as that of the approve() function. 4개의 인수를 받는다. 3개는 Byte58 주소이고 1개는 전송량이다.
 
 먼저, 함수는 주소의 유효성 검사를 실행합니다. 후에 소비자에게 Runtime API의 일부인 CheckWitness()함수를 사용하여 이 거래를 실행할 권한이 있는지 확인합니다.  
 
@@ -337,6 +337,6 @@ The last section in the right-hand pane, Restful, is the API that is used to com
 
 The transaction hash can be used to fetch the smartcode for the respective transaction.
 
-The Restful API can be accessed from SDKs too, but SDK integration is another tutorial all by itself.
+Restful API는 SDK응 통해서도 접근 및 사용할 후 있습니다. SDK 통합 방법 관련 튜토리얼은 다른 글에서도 확인하실 수 있습니다.
 
 ![](media/image35.jpg){width="3.2727274715660544in" height="3.0673534558180227in"}
