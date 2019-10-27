@@ -43,20 +43,18 @@ height="6.191666666666666in"}
 ![](media/image2.jpg){width="3.75in" height="6.216666666666667in"}
 
 <<<<<<< HEAD
-: 테스트넷에서 스마트 컨트랙트 배포 및 테스팅하는 과정은 메인넷의 ONT/ONG의 잔고없이도 진행할 수 있습니다. But, to pay the gas cast of deploying a contract on the test net, you will still need a nominal testnet ONG balance. The gas cost is calculated by taking the product of gas price and gas limit(gas price \* gas limit). Test tokens have been made available for free by Ontology and can be applied for by following
+: 테스트넷에서 스마트 컨트랙트 배포 및 테스팅하는 과정은 메인넷의 ONT/ONG의 잔고없이도 진행할 수 있습니다. 하지만, 테스트 넷의 ONG 잔고는 필요합니다. 필요한 가스 총 비용은 가스 값과 가스 limit으로 결정됩니다. (가스 값 \* 가스 limit) 테스트 토큰은 무료로 제공될 수 있으며 아래와 같이 신청할 수 있습니다.
 
 given link:
 [[https://developer.ont.io/applyONG]{custom-style="Hyperlink"}](https://developer.ont.io/applyONG)
 
-![](media/image3.jpeg){width="5.356871172353456in"
-height="2.6287871828521436in"}
+![](media/image3.jpeg){width="5.356871172353456in" height="2.6287871828521436in"}
 
-![](media/image4.jpeg){width="7.242424540682415in"
-height="3.5619203849518812in"}
+![](media/image4.jpeg){width="7.242424540682415in" height="3.5619203849518812in"}
 
-우리가 사용할 IDE는 브라우저 기반의 개발 환경이자 Python, C\#, and JavaScript(coming soon) 를 지원하는 Ontology의 Smart X입니다. We are going to take an in-depth look at the development process using Python, as far as this tutorial is concerned.
+우리가 사용할 IDE는 브라우저 기반의 개발 환경이자 Python, C\#, and JavaScript(coming soon) 를 지원하는 Ontology의 Smart X입니다. 해당 과정에서 소개할 개발 과정에서는 Python이 사용될 것입니다.
 
-NeoVM serves as the execution engine for the programs written using Python in SmartX. SmartX core integrates all of Ontology's APIs, and so all the different functions which allow us to perform blockchain related tasks can be used directly by importing the relevant API, which we will be discussing later in this tutorial.
+NeoVM 은 SmartX에서 Python으로 작성된 프로그램을 실행하는 실행 엔진의 역할을 합니다. SmartX 코어는 모든 Ontology의 API들을 통합하여, 블록체인 관련 행위를 실행하는데 있어서 필요한 관련 API를 import 하여 직접적으로 사용할 수 있도록하게 합니다. 이 부분은 해당 과정에서 추후에 더 자세하게 이야기 해보겠습니다.
 
 ![](media/image5.jpeg){width="7.268055555555556in" height="3.609027777777778in"}
 
@@ -64,17 +62,17 @@ NeoVM serves as the execution engine for the programs written using Python in Sm
 
 3.  **Launching SmartX**
 
-주의: Testing smart contracts requires a Cyano account but does not need ONT/ONG balance.
+알림 : 스마트 컨트랙트 테스팅을 하려면 Cyano 계정은 필요하지만, ONT/ONG 잔고는 필요하지 않습니다.
 
 ![](media/image4.jpeg){width="7.242424540682415in" height="3.5619203849518812in"}
 
 ![](media/image6.jpeg){width="7.268055555555556in" height="3.5527777777777776in"}
 
-Once logged in you will be prompted to select a project. Create a new one if there are no existing projects.
+로그인을 하게되면 프로젝트를 선택하라고 하는 메세지를 보게 될 것입니다. 만약 이미 존재하는 프로젝트가 없다면 새로운 프로젝트를 생성하십시오. 
 
 ![](media/image7.jpg){width="2.2229440069991253in" height="2.3939391951006126in"}
 
-Upon selecting the new project option, you can choose a programming language to work with. In this tutorial, since our focus is on developing smart contracts with NeoVM, we will be illustrating examples and sample code using Python.
+새로운 프로젝트를 만드려고 할 때, 작업에 사용할 프로그래밍 언어를 선택할 수 있습니다. 해당 과정에서 제시할 예시나 사용할 샘플 코드는 모두 Python으로 작성되어 있습니다. 해당 과정은 개발 언어 자체보다는 NeoVM을 이용하여 스마트 컨트랙트 개발하는 방법에 더 집중하여 작성되었습니다.
 
 ![](media/image8.jpeg){width="7.268055555555556in" height="3.5375in"}
 
@@ -102,7 +100,7 @@ The variables declared in this section of the code define the protocol itself an
 
 "OWNER" stores the Base58 address of the entity or account that holds the authority over the totality of tokens and can choose to distribute them as and when needed.
 
-"TOTAL\_AMOUNT" 는 현재 존재하는 토큰의 총량을 stores the total number of tokens that exist. Always a fixed number.
+"TOTAL\_AMOUNT" 는 현재 존재하는 토큰의 총량을 나타냅니다. 항상 같은 값을 반환합니다.
 
 "BALANCE\_PREFIX" is an access modifier that is used with account addresses for authentication purposes. "APPROVE\_PREFIX" serves the same purpose, but for the approve operation wherein the owner can authenticate another account to use tokens.
 
@@ -126,7 +124,7 @@ height="0.8083333333333333in"}
 이제 Main() 함수를 한번 살펴봅시다 
 function.![](media/image13.jpg){width="5.189394138232721in" height="4.5815594925634295in"}
 
-Main() 함수는 2개의 argument를 취합니다. function takes two arguments, *operation* and *args*. The *operation* argument is based on the operation to be performed and dictates the function to the executed. The *args* argument helps passing the important information that a function needs to carry out further execution, for example account addresses or input data.
+Main() 함수는 2개의 argument를 취합니다. *operation* 과 *args* 입니다. The *operation* argument is based on the operation to be performed and dictates the function to the executed. The *args* argument helps passing the important information that a function needs to carry out further execution, for example account addresses or input data.
 
 Here, clearly there are 11 different functions that can be called depending upon the argument that is passed in Main(). SmartX passes these arguments using the "Options" pane on the bottom right.
 
@@ -146,7 +144,7 @@ Here, clearly there are 11 different functions that can be called depending upon
 
 -   **transferMulti(args) :** The parameter here is an array that contains the same information, i.e., the sender's address, receiver's address, and the amount to be sent, in that sequence at the respective indices. It can be iterated for multiples transactions by passing the respective account addresses and the corresponding amount.
 
--   **transferFrom(spender, from\_acc, to\_acc, amount) :** The spender here takes a certain amount of tokens from the from\_acc address, and transfers them to the to\_acc address.
+-   **transferFrom(spender, from\_acc, to\_acc, amount) :** 송신자는 \_acc address에서 해당하는 양을 받아서 \_acc address에 전송을 합니다.
 
 -   **approve(owner, spender, amount) :** The owner authorizes the spender to use a certain amount of tokens from their own account. Both the owner and spender arguments here are Base58 addresses and the amount specifies the amount that the spender is authorized to spend.
 
@@ -166,7 +164,7 @@ This is how a simple access function can be defined. The name() function takes n
 
 ![](media/image15.jpg){width="3.25in" height="1.252205818022747in"}
 
-The balanceOf() function takes one argument, a Base58 address which denotes an account. There is a validity check in place that verifies the length of the address and raises an exception if the address is invalid. If the address is valid the get() function is called with two arguments, the account address prefixed with BALANCE\_PREFIX, and the context.
+balanceOf() 함수는 1개의 인수만을 받습니다. 계정을 나타내는 Base58 주소 입니다. 해당 인수에 대해서 길이 검사를 하고 유효하지 않다면 예외 처리를 하는 유효성 검사도 있습니다. 만약에 주소가 유효하다면 get() 함수가 2개의 인수들과 함께 호출됩니다. 2개의 인수는 BALANCE\_PREFIX을 접두로 가진 계정 주소와 context 입니다.
 
 The context allows for data reference on the chain to fetch the account balance value, while the prefixed account address ensures authenticated access. Next, get() returns this data to Main() where it is output to the log window using the notify() function. The totalSupply() function works in a similar fashion.
 
@@ -180,7 +178,7 @@ Utilities are methods that have richer functionality and help modifying the on-c
 
 ![](media/image16.jpg){width="4.95in" height="3.6666666666666665in"}
 
-The transfer() function implements the most fundamental transaction feature, transferring tokens from one account to another. It takes three arguments, the sender's address, the receiver's address, and the amount to be transferred.
+The transfer() 함수는 토큰을 한 계정에서 다른 계정으로 전송하는 거래의 가장 기본적인 특징을 실행합니다. 해당 함수는 3개의 인수를 받습니다. 보내는 사람의 주소, 받는 사람의 주소 그리고 거래량입니다.
 
 해당 함수는 간단한 길이 검사로 검증을 진행하지만, 원한다면 더 복잡한 논리구조를 개발 및 구현할 수 있습니다. 
 
@@ -192,25 +190,23 @@ If the amount equates to the balance amount exactly, the balance of sender accou
 
 만약 잔고가 거래량보다 높다면, the amount is deducted from the balance by making a put() call and updating the sender accounts balance with the deducted value.
 
-Next, the receiver's address is prefixed with the BALANCE\_PREFIX, and the prefixed address is used to add the transfer amount to the receiver's account.
+다음으로, BALANCE\_PREFIX를 접두로 둔 받는 사람의 주소는 받는 사람의 계좌잔고에 거래량을 더하는 과정에서 사용됩니다. 
 
-마지막으로, 해당 거래는  Finally, this transaction event is sent to the chain using the RegisterAction() method for recording in a ledger.
+마지막으로, 해당 거래는 RegisterAction() 함수를 사용하여 체인에 전송되고 원장에 기록됩니다.
 
 TransferEvent is the alias that RegisterAction() uses here. RegisterAction() is a method of the Action API and it takes four arguments that are transferred to the chain in order to record transaction details. The transaction hash and certain other details are output in the logs section.
 
- **transferMulti()** 도 비슷한 방법으로 작동합니다. transferMulti()가 실행되면 transfer()를 호출하기에 기본적인 논리구조는 거의 비슷합니다,  but it allows for multiple transfers to take place simultaneously. It takes one argument which is a nested array.
+ **transferMulti()** 도 비슷한 방법으로 작동합니다. transferMulti()가 실행되면 transfer()를 호출하기에 기본적인 논리구조는 거의 비슷합니다, 하지만 차이점이 있다면 여러 개의 거래가 동시에 처리된다는 점입니다. 인수는 nested array 1개를 필요로 합니다.
 
-![](media/image17.jpg){width="5.2551924759405075in"
-height="1.7727274715660541in"}
+![](media/image17.jpg){width="5.2551924759405075in" height="1.7727274715660541in"}
 
 The sub-array elements are processed in sets of three such that the first and second elements still represent the sender's and receiver's addresses, and the third element represents the transfer amount. The sub arrays are iterated till there are no more elements left in the args\[\] array.
 
-Exception is thrown in case the sub-array does not contain exactly three elements, or the previous transaction fails for some reason, and the control comes out of the loop and goes back to Main()
+만약에 sub-array가 3개의 인수를 포함하지 않거나 이전 거래가 특정 이유로 인하여 실패하였다면 예외처리가 됩니다. 예외처리가 되면 통제권은 loop에서 나와 Main()으로 넘어갑니다.
 
 **approve(owner, spender, amount)**
 
-![](media/image18.jpg){width="5.208333333333333in"
-height="3.1166666666666667in"}
+![](media/image18.jpg){width="5.208333333333333in" height="3.1166666666666667in"}
 
 The approve function implements another complex logic wherein an account, namely the "spender" is given the permission to utilize a certain amount in tokens from another account, namely the "owner".
 
@@ -244,12 +240,11 @@ The transaction comes next. 만약 거래 금액이 승인된 금액을 초과�
 
 만약 승인된 금액이 거래량을 초과한다면, 그 차액이 계산되어 추후에 참조할 수 있도록 원장에 기록됩니다. 그리고 그 거래량은 "보낸 사람" 계좌 잔고에서 차감됩니다.
 
-The transaction amount is then transferred to the "to" account using the put() function. The event is then recorded and the result with the transaction hash is displayed in the logs section of the IDE.
+거래량은 put()함수를 사용하여 "받는" 사람의 계정으로 전송됩니다. 후에 해당 이벤트는 기록되고 거래 해시와 함께 결과는 IDE의 로그 섹션에 나타납니다.
 
 Another function that implements a similar logic has be defined as **allowance(owner, spender)** which facilitates querying the amount of allowance that has been allocated to the "spender" account from the "owner" account.
 
-![](media/image20.jpg){width="4.633333333333334in"
-height="1.1666666666666667in"}
+![](media/image20.jpg){width="4.633333333333334in" height="1.1666666666666667in"}
 
 Practically speaking, this function cam be classified as an access function too in the sense that it returns the allowance value. But it also performs a get() query to fetch this result from the chain.
 
@@ -259,13 +254,13 @@ A key generated by concatenating the prefixed owner address and the spender addr
 
 ![](media/image21.jpg){width="5.175in" height="1.5916666666666666in"}
 
-논리 구조 구현이 완료되고 나면, 이제는 스마트 컨트랙트를 컴파일링 할 차례입니다. 
+논리 구조 구현이 완료되고 나면, 이제는 스마트 컨트랙트를 실행(compile)할 차례입니다. 
 
-Upon compiling the smart contract, the following results can be seen in the IDE-
+스마트 컨트랙트를 실행하고 나면, 그 결과는 IDE 화면에 다음과 같이 보입니다 - 
 
 ![](media/image22.jpeg){width="2.5737970253718285in" height="3.25in"}
 
-In the compile tab, the AVM byte code is the resulting intermediate code produced after compilation. NeoVM processes this AVM code to execute our contract.
+compile 탭에 보이는, AVM 바이트 코드는 컴파일 후에 생성된 중 간결과물입니다. NEOVM 은 이 AVM 코드를 처리하여 계약을 실행합니다.
 
 The opcode indicates the stack status line by line; an advanced debugging tool.
 
@@ -275,7 +270,7 @@ ABI stores the parameter information for all the functions and the contract hash
 
 The logs section displays the compilers response which includes everything from debugging results to the information that the VM returns.
 
-After all the compilation errors have been dealt with and the contract is successfully compiled, we can proceed to deploy it.
+컴파일 결과 나타나는 오류가 모두 수정되거나 해결된 후에, 컴파일을 성공하면 이제 해당 컨트랙트는 배포될 수 있다.
 
 ![](media/image24.jpg){width="5.091666666666667in" height="6.133333333333334in"}
 
@@ -309,14 +304,14 @@ All the results that are displayed in the logs section are in hexadecimal format
 
 ![](media/image28.jpg){width="4.983333333333333in" height="6.258333333333334in"}
 
-Every time a transaction is executed, a transaction hash will be returned that can be used to track the results. Let us try another transaction, this time with actual tokens being transferred.
+거래가 실행될 ㄷ대마다, 거래 해시값이 결과로 반환되고 해당 거래 해시값은 결과를 추적하는데 사용된다. Let us try another transaction, this time with actual tokens being transferred.
 
 ![](media/image29.jpg){width="5.108333333333333in" height="5.408333333333333in"}
 
 Once you run the contract, you will be prompted to confirm the transaction and enter the gas price and gas limit that will used to calculate the gas which the contract consumes in its execution process.
 (ONG)
 
-가스 가격과 가스 리밋을 입력하고 and provide the confirmation.  After the transaction is carried out successfully the transaction hash will be displayed in the logs section.
+가스 가격과 가스 리밋을 입력합니다. 거래가 성공적으로 전달이 되면 거래 해시갑이 로그 섹션에 나타날 것입니다.
 
 ![](media/image30.jpg){width="7.268055555555556in" height="0.5875in"}
 
