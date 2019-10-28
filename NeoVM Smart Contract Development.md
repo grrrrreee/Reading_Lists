@@ -18,7 +18,7 @@ NeoVM 과 SmartX 를 이용한 스마트 컨트랙트 개발-- 기본편
 
 개발 환경설정 과정은 복잡하고 시간이 많이 소요되는 작업일 수 있습니다. 그래서 이 과정은 최대한 swift 하고 편하게 하여 많은 사람들이 어려움을 느끼지 않게 하기 위해 노력했습니다. 이 과정에서 사용될 툴들은 모두 웹기반이고 실용적이며 바로 사용할 수 있습니다. 
 
-먼저, 편의를 극대화 시키기 위해서, 우리는 스마트 컨트랙트를 개발 및 테스팅을 테스트넷에서 진행할 예정입니다. 그리고 이를 통해 프라이빗 체인의 필요성을 없앨 계획입니다. (thereby eliminating the need of a private chain.) 프라이빗 블록체인 네트워크 구조는 로컬 환경에서도 Ontology의 Punica suite를 사용하여 쉽게 설정될 수 있습니다. Punica suite는 프라이빗 넷에서도 스마트 컨트랙트를 배포하고 테스팅 할 수 있는 개발 툴 모음집입니다. 하지만, 해당 과정에서는 사용되지 않습니다.
+먼저, 편의를 극대화 시키기 위해서, 우리는 스마트 컨트랙트를 개발 및 테스팅을 테스트넷에서 진행할 예정입니다. 그리고 이를 통해 프라이빗 체인의 필요성을 없앨 계획입니다. 프라이빗 블록체인 네트워크 구조는 로컬 환경에서도 Ontology의 Punica suite를 사용하여 쉽게 설정될 수 있습니다. Punica suite는 프라이빗 넷에서도 스마트 컨트랙트를 배포하고 테스팅 할 수 있는 개발 툴 모음집입니다. 하지만, 해당 과정에서는 사용되지 않습니다.
 
 우리에게 제일 먼저 필요한 것은 웹 브라우저입니다. 그 중에서도 구글 크롬을 추천합니다. 과정에서 사용할 Cyano 지갑이 구글 크롬 플러그인이기 때문입니다.
 Download link -
@@ -52,9 +52,9 @@ given link:
 
 ![](media/image4.jpeg){width="7.242424540682415in" height="3.5619203849518812in"}
 
-우리가 사용할 IDE는 브라우저 기반의 개발 환경이자 Python, C\#, and JavaScript(coming soon) 를 지원하는 Ontology의 Smart X입니다. 해당 과정에서 소개할 개발 과정에서는 Python이 사용될 것입니다.
+우리가 사용할 IDE는 브라우저 기반의 개발 환경이자 Python, C\# 그리고 JavaScript(곧 지원) 를 지원하는 Ontology의 Smart X입니다. 해당 과정에서 소개할 개발 과정에서는 Python이 사용될 것입니다.
 
-NeoVM 은 SmartX에서 Python으로 작성된 프로그램을 실행하는 실행 엔진의 역할을 합니다. SmartX 코어는 모든 Ontology의 API들을 통합하여, 블록체인 관련 행위를 실행하는데 있어서 필요한 관련 API를 import 하여 직접적으로 사용할 수 있도록하게 합니다. 이 부분은 해당 과정에서 추후에 더 자세하게 이야기 해보겠습니다.
+NeoVM 은 SmartX에서 Python으로 작성된 프로그램을 실행하는 실행 엔진의 역할을 합니다. SmartX 코어는 모든 Ontology의 API들을 통합하여, 블록체인 관련 행위를 실행하는데 있어서 필요한 관련 API를 import 하여 직접적으로 사용할 수 있도록 하게합니다. 이 부분은 해당 과정에서 추후에 더 자세하게 이야기 해보겠습니다.
 
 ![](media/image5.jpeg){width="7.268055555555556in" height="3.609027777777778in"}
 
@@ -102,17 +102,17 @@ OEP-4 템플릿을 선택하였다면 이미 코드는 쓰여져 있을 것입�
 
 "TOTAL\_AMOUNT" 는 현재 존재하는 토큰의 총량을 나타냅니다. 항상 같은 값을 반환합니다.
 
-"BALANCE\_PREFIX" is an access modifier that is used with account addresses for authentication purposes.
+"BALANCE\_PREFIX" 는 인증 목적으로 사용되는 access modifier 입니다.  is an access modifier that is used with account addresses for authentication purposes.
 
-"APPROVE\_PREFIX" serves the same purpose, but for the approve operation wherein the owner can authenticate another account to use tokens.
+"APPROVE\_PREFIX" 는 같은 목적으로 사용되기는하지만, 소유자가 다른 계정이 토큰을 사용할 수 있게하는 인증작업에 사용됩니다.(?)
 
-"SUPPLY\_KEY" correlates directly to the total amount of tokens and is used for any operations that may be carried with the total tokens figure, since the value isn't directly accessible.
+"SUPPLY\_KEY" 는 토큰 전체량과 직접적으로 관련이 있으며, 토큰 전체 값에 직접적으로 접근할 수 없기에 해당 값을 이용하는 모든 작동들에 이 함수가 이용된다.(?)
 
 ![](media/image11.jpg){width="1.3in" height="0.19166666666666668in"}
 
-This line immediately stands out in the upper section of the code.
+해당 행은 코드의 상단 부분에 바로 드러납니다. (?)
 
-GetContext() 는 스마트 컨트랙트와 블록체인의 다리 역할을 하는 함수입니다. 해당함수는 Storage API의 일부인 GET과 PUT를 호출하여 체인에 혹은 체인으로부터 정보를 fetching 하거나 transmitting 할 때 사용됩니다. 
+GetContext() 는 스마트 컨트랙트와 블록체인의 다리 역할을 하는 함수입니다. 해당함수는 Storage API의 일부인 GET과 PUT를 호출하여 체인에 혹은 체인으로부터 정보를 받아오거나 전송할 때 사용됩니다. 
 
 해당과정에사 사용될 관련 API들을 하나씩 살펴보면서 진행할 예정입니다. 또한, 후반부에는 사용가능한 전체 API를 간단하게 알아보겠습니다.
 
@@ -126,11 +126,11 @@ height="0.8083333333333333in"}
 이제 Main() 함수를 한번 살펴봅시다 
 function.![](media/image13.jpg){width="5.189394138232721in" height="4.5815594925634295in"}
 
-Main() 함수는 2개의 argument를 취합니다. *operation* 과 *args* 입니다. The *operation* argument is based on the operation to be performed and dictates the function to the executed. The *args* argument helps passing the important information that a function needs to carry out further execution, for example account addresses or input data.
+Main() 함수는 2개의 argument를 취합니다. *operation* 과 *args* 입니다. *operation* 인수는 수행할 조작들을 기반으로하여 실행될 기능들을 지시합니다. *args* 인수는 함수가 추가적인 실행을 하는데 있어서 필요한 중요한 정보(예를 들면 계정 주소나 입력값 데이터 등)를 전달하는데 도움을 주는 역할을 합니다.
 
 Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 정도가 있다. SmartX는 이 인수들을 우측 하단에 있는 "Options"을 이용하여 전달합니다.
 
--   **init()** **:** init() 함수는 프로그램 논리 구조의 시작점을 설정합니다. 해당 함수는 initializes the definition variables declared at the top based on the values provided. 그렇기에, 해당 함수는 배포 후에 가장 먼저 실행되어야 하는 함수입니다.
+-   **init()** **:** init() 함수는 프로그램 논리 구조의 시작점을 설정합니다. 해당 함수는 주어진 값을 기반으로 위에서 언급된 변수들의 정의를 초기값 설정을 한다. 그렇기에, 해당 함수는 배포 후에 가장 먼저 실행되어야 하는 함수입니다.
 
 -   **name() :** 해당 함수는 토큰에 설정된 이름을 반환합니다. 이번 경우에는 "My Token" 입니다. 
 
@@ -138,7 +138,7 @@ Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 
 
 -   **decimals() :** 유효한 토큰 값을 정확하게 소수점까지 반환합니다, 이 경우에는 8자리입니다.
 
--   **totalSupply() :** Returns the total number of tokens assigned while initializing. Denotes the fixed number of tokens allocated for circulation. (Uses SUPPLY\_KEY to fetch the value from the chain, stored earlier during initialization)
+-   **totalSupply() :** 초기값 설정 때 배정된 토큰 총량을 반환한다. Denotes the fixed number of tokens allocated for circulation. (Uses SUPPLY\_KEY to fetch the value from the chain, stored earlier during initialization)
 
 -   **balanceOf(acct) :** Fetches the corresponding token balance of the account that identifies with the Base58 address passed as argument to the function.
 
