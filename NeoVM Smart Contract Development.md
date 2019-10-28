@@ -94,9 +94,9 @@ OEP-4 템플릿을 선택하였다면 이미 코드는 쓰여져 있을 것입�
 
 "NAME" 그리고 "SYMBOL" 와 같은 변수는 토큰의 식별자로 사용됩니다. 
 
-"FACTOR" is the base 10 value that dictates the precision of amounts that can be transferred. 예를 들어, 값이 100으로 설정되면, 최대 2레벨의 정밀도를 시스템에서 지원합니다. 
+"FACTOR" 은 전송량의 정확도를 나타내는 값으로 기본값은 10으로 설정되어있습니다. 예를 들어, 값이 100으로 설정되면, 최대 2레벨의 정밀도를 시스템에서 지원합니다. 
 
-"DECIMALS" stores the multiplier value for access convenience.
+"DECIMALS" 은 접근(access) 편의성을 위한 승수 값을 저장하고 있습니다. 
 
 "OWNER" 는 Base58 주소를 저장하고 있습니다. 해당 주소는 토큰에 대한 전반적인 권한과 필요에 따라 이를 분산시킬 수 있는 권한을 가진 계정 혹은 주체의 주소입니다.
 
@@ -148,11 +148,11 @@ Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 
 
 -   **transferFrom(spender, from\_acc, to\_acc, amount) :** 송신자는 \_acc address에서 해당하는 양을 받아서 \_acc address에 전송을 합니다.
 
--   **approve(owner, spender, amount) :** The owner authorizes the spender to use a certain amount of tokens from their own account. 여기서 소유자와 소비자는 모두 Base58 주소와 소비자가 허가받은 양을 인수로 사용합니다.
+-   **approve(owner, spender, amount) :** 소유자는 소비자에게 자신의 계정에 있는 특정량의 토큰을 사용할 수 있는 권한을 부여합니다. 여기서 소유자와 소비자는 모두 Base58 주소와 소비자가 허가받은 양을 인수로 사용합니다.
 
--   **allowance(owner, spender) :** This function can be used to the amount that the owner account has authorized spender to use. 이 경우에는 2개의 인수 모두 Base58 주소입니다.
+-   **allowance(owner, spender) :** This function can be used to the amount that the owner account has authorized spender to use. 이 경우에는 2개의 인수를 필요로 하는데 2개 모두 Base58 주소입니다.
 
-위에 언급된 함수들은 2가지 종류로 나누어집니다. - 접근형 함수와 유틸리티형입니다. Let us consider the flow of control as these functions are called.
+위에 언급된 함수들은 2가지 종류로 나누어집니다. - 접근형 함수와 유틸리티형입니다.  Let us consider the flow of control as these functions are called.
 
 Access 함수들은 주로 컨트랙트 배포 후에 데이터를 가져오는 역할을 합니다. name(), symbol(), totalSupply() 그리고 balanceOf(acc) 와 같은 함수들은 이러한 정보들을 체인으로부터 정보를 취하는 기능들을 모아놓은 Storage API의 get() 함수를 사용하여 수집합니다. 실제 프로그램 논리구조에서는 어떤식으로 적용되는지 한번 살펴봅시다.
 
@@ -174,7 +174,7 @@ The context allows for data reference on the chain to fetch the account balance 
 
 샘플 코드에 있는 유틸리티형 함수를 살펴보겠습니다. 
 
-유틸리티형 함수는 기능들을 더욱 풍부하게 하고 온체인 데이터들을 수정할 수 있게하며, 이느 실행될 거래와 작업들의 기반이 됩니다. 해당 과정에서 사용되는 OEP-4 토큰 논리구조는 다양한 사용사례들과 시나리오들을 기능형태로 묘사합니다. This is to exhibit just how versatile smart contracts are in nature and the different kinds of business logic that they can be used to generate.
+유틸리티형 함수는 기능들을 더욱 풍부하게 하고 온체인 데이터들을 수정할 수 있게하며, 이느 실행될 거래와 작업들의 기반이 됩니다. 해당 과정에서 사용되는 OEP-4 토큰 논리구조는 다양한 사용사례들과 시나리오들을 기능형태로 묘사합니다. 이는 스마트 컨트랙트가 얼마나 많은 분야에 사용될 수 있고 다양한 방법으로 응용될 수 있는지를 나타내고 우리가 생성할 수많은 종류의 비즈니스 로직에 사용될 수 있다는 것을 보여줍니다.
 
 **transfer(from\_acc, to\_acc, amount)**
 
@@ -188,7 +188,7 @@ The transfer() 함수는 토큰을 한 계정에서 다른 계정으로 전송�
 
 만약에 잔고가 거래량보다 적다면, 거래는 실패하게 되고 통제권은 바로 Main() 으로 넘어가게 됩니다. 
 
-If the amount equates to the balance amount exactly, the balance of sender account is set to 0 by calling the delete() method using the sender's prefixed address. This is practically equivalent to using the put() method to manually assign the value 0 to sender's account but using put() method in this case might give rise to security vulnerabilities.
+만약에 잔고와 거래량이 정확히 일치한다면 보내는 사람의 계정 잔고는 0으로 설정됩니다. 이때 보내는 사람의 주소의 접두사를 이용하여 delete() 방법이 호출됩니다. 실질적으로 put() 방법을 사용하여 보내는 사람의 계좌 잔고를 0으로 만드는 것과 같은 결과를 내기는 하지만 put() 밥ㅇ법을 사용한다면 보안상 취약점이 나타날 수 있어서 delete() 방법을 사용하였습니다. 
 
 만약 잔고가 거래량보다 높다면, the amount is deducted from the balance by making a put() call and updating the sender accounts balance with the deducted value.
 
@@ -228,7 +228,7 @@ The approve function implements another complex logic wherein an account, namely
 
 transferFrom() 함수는 더 복잡한 논리구조를 실행합니다. 이는 특정 어플리케이션에서 유용하게 사용될 수 있을것입니다.
 
-This function allows a third party, namely the spender, to utilize a certain amount in tokens that are provided from an account that does not designate to their own credentials, basically implementing the same logic as that of the approve() function. 4개의 인수를 받는다. 3개는 Byte58 주소이고 1개는 전송량이다.
+해당함수에서는 spender라고 불리우는 제3자를 허용합니다. This function allows a third party, namely the spender, to utilize a certain amount in tokens that are provided from an account that does not designate to their own credentials, basically implementing the same logic as that of the approve() function. 4개의 인수를 받는다. 3개는 Byte58 주소이고 1개는 전송량이다.
 
 먼저, 함수는 주소의 유효성 검사를 실행합니다. 후에 소비자에게 Runtime API의 일부인 CheckWitness()함수를 사용하여 이 거래를 실행할 권한이 있는지 확인합니다.  
 
@@ -306,7 +306,7 @@ All the results that are displayed in the logs section are in hexadecimal format
 
 ![](media/image28.jpg){width="4.983333333333333in" height="6.258333333333334in"}
 
-거래가 실행될 때마다, 거래 해시값이 결과로 반환되고 해당 거래 해시값은 결과를 추적하는데 사용됩니다. Let us try another transaction, this time with actual tokens being transferred.
+거래가 실행될 때마다, 거래 해시값이 결과로 반환되고 해당 거래 해시값은 결과를 추적하는데 사용됩니다. 이제 다른 거래도 한번 실행해보려고 합니다. 이번에는 실제 토큰을 전송해보도록 하겠습니다. 
 
 ![](media/image29.jpg){width="5.108333333333333in" height="5.408333333333333in"}
 
@@ -337,6 +337,6 @@ The last section in the right-hand pane, Restful, is the API that is used to com
 
 The transaction hash can be used to fetch the smartcode for the respective transaction.
 
-Restful API는 SDK응 통해서도 접근 및 사용할 후 있습니다. SDK 통합 방법 관련 튜토리얼은 다른 글에서도 확인하실 수 있습니다.
+Restful API는 SDK를 통해서도 접근 및 사용할 후 있습니다. SDK 통합 방법 관련 튜토리얼은 다른 글에서도 확인하실 수 있습니다.
 
 ![](media/image35.jpg){width="3.2727274715660544in" height="3.0673534558180227in"}
