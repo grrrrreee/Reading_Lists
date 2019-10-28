@@ -90,7 +90,7 @@ OEP-4 템플릿을 선택하였다면 이미 코드는 쓰여져 있을 것입�
 
 ![](media/image10.jpg){width="7.258333333333334in" height="1.525in"}
 
-이 섹션으 코드에서 정의된 변수들은 프로토콜 그 자체와 이 기능들을 제어할 특징점들을 정의합니다.
+이 섹션은 코드에서 정의된 변수들은 프로토콜 그 자체와 이 기능들을 제어할 특징점들을 정의합니다.
 
 "NAME" 그리고 "SYMBOL" 와 같은 변수는 토큰의 식별자로 사용됩니다. 
 
@@ -154,13 +154,13 @@ Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 
 
 위에 언급된 함수들은 2가지 종류로 나누어집니다. - 접근형 함수와 유틸리티형입니다. Let us consider the flow of control as these functions are called.
 
-Access functions are primarily used to fetch data post contract deployment. Functions such as name(), symbol(), totalSupply() and balanceOf(acc) allow us to achieve this by using get() function from the Storage API which fetches relevant data from the chain. Let us look at how it is implemented in program logic.
+Access 함수들은 주로 컨트랙트 배포 후에 데이터를 가져오는 역할을 합니다. name(), symbol(), totalSupply() 그리고 balanceOf(acc) 와 같은 함수들은 이러한 정보들을 체인으로부터 정보를 취하는 기능들을 모아놓은 Storage API의 get() 함수를 사용하여 수집합니다. 실제 프로그램 논리구조에서는 어떤식으로 적용되는지 한번 살펴봅시다.
 
 **name() function definition**
 
 ![](media/image14.jpg){width="2.1212117235345582in" height="0.8444630358705162in"}
 
-This is how a simple access function can be defined. The name() 함수는 인수가 필요하지 않습니다. 비록 name(), symbol() 그리고 decimals()가 명시적으로 get() 함수를 호출하지는 않지만, 스마트 컨트랙트가 배포된 후에, 모든 정보는 체인에서 fetch 된다. 
+가장 간단한 access 함수형태입니다. name() 함수는 인수가 필요하지 않습니다. 비록 name(), symbol() 그리고 decimals()가 명시적으로 get() 함수를 호출하지는 않지만, 스마트 컨트랙트가 배포된 후에, 모든 정보는 체인에서 fetch 된다. 
 
 **balanceOf(acc) function definition**
 
@@ -272,7 +272,7 @@ ABI stores the parameter information for all the functions and the contract hash
 
 The logs section displays the compilers response which includes everything from debugging results to the information that the VM returns.
 
-컴파일 결과 나타나는 오류가 모두 수정되거나 해결된 후에, 컴파일을 성공하면 이제 해당 컨트랙트는 배포될 수 있다.
+컴파일 결과 나타나는 오류가 모두 수정되거나 해결된 후에, 컴파일을 성공하면 이제 해당 컨트랙트는 배포될 수 있습니다.
 
 ![](media/image24.jpg){width="5.091666666666667in" height="6.133333333333334in"}
 
@@ -306,7 +306,7 @@ All the results that are displayed in the logs section are in hexadecimal format
 
 ![](media/image28.jpg){width="4.983333333333333in" height="6.258333333333334in"}
 
-거래가 실행될 때마다, 거래 해시값이 결과로 반환되고 해당 거래 해시값은 결과를 추적하는데 사용된다. Let us try another transaction, this time with actual tokens being transferred.
+거래가 실행될 때마다, 거래 해시값이 결과로 반환되고 해당 거래 해시값은 결과를 추적하는데 사용됩니다. Let us try another transaction, this time with actual tokens being transferred.
 
 ![](media/image29.jpg){width="5.108333333333333in" height="5.408333333333333in"}
 
