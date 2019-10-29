@@ -102,7 +102,7 @@ OEP-4 템플릿을 선택하였다면 이미 코드는 쓰여져 있을 것입�
 
 "TOTAL\_AMOUNT" 는 현재 존재하는 토큰의 총량을 나타냅니다. 항상 같은 값을 반환합니다.
 
-"BALANCE\_PREFIX" 는 인증 목적으로 사용되는 access modifier 입니다.  is an access modifier that is used with account addresses for authentication purposes.
+"BALANCE\_PREFIX" 는 인증 목적으로 사용되는 access modifier 입니다.
 
 "APPROVE\_PREFIX" 는 같은 목적으로 사용되기는하지만, 소유자가 다른 계정이 토큰을 사용할 수 있게하는 인증작업에 사용됩니다.(?)
 
@@ -138,9 +138,9 @@ Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 
 
 -   **decimals() :** 유효한 토큰 값을 정확하게 소수점까지 반환합니다, 이 경우에는 8자리입니다.
 
--   **totalSupply() :** 초기값 설정 때 배정된 토큰 총량을 반환한다. Denotes the fixed number of tokens allocated for circulation. (Uses SUPPLY\_KEY to fetch the value from the chain, stored earlier during initialization)
+-   **totalSupply() :** 초기값 설정 때 배정된 토큰 총량을 반환한다. 순환에 할당된 고정된 숫자를 반환합니다. (Uses SUPPLY\_KEY to fetch the value from the chain, stored earlier during initialization)
 
--   **balanceOf(acct) :** Fetches the corresponding token balance of the account that identifies with the Base58 address passed as argument to the function.
+-   **balanceOf(acct) :** 함수에 인수로 전달된 Base58 주소로 식별되는 계정의 잔고에 해당하는 금액을 불러옵니다. 
 
 -   **transfer(from\_acc, to\_acc, amount) :** 해당 함수는 인수로 받은 값만큼을 from\_acc 주소에서 to\_acc 주소로 전송합니다.
 
@@ -150,9 +150,9 @@ Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 
 
 -   **approve(owner, spender, amount) :** 소유자는 소비자에게 자신의 계정에 있는 특정량의 토큰을 사용할 수 있는 권한을 부여합니다. 여기서 소유자와 소비자는 모두 Base58 주소와 소비자가 허가받은 양을 인수로 사용합니다.
 
--   **allowance(owner, spender) :** This function can be used to the amount that the owner account has authorized spender to use. 이 경우에는 2개의 인수를 필요로 하는데 2개 모두 Base58 주소입니다.
+-   **allowance(owner, spender) :** 해당 함수는 소유자 계정이 허가한 소비자가 허가된 양에 한해서 사용될 수 있습니다.(?) 이 경우에는 2개의 인수를 필요로 하는데 2개 모두 Base58 주소입니다.
 
-위에 언급된 함수들은 2가지 종류로 나누어집니다. - 접근형 함수와 유틸리티형입니다.  Let us consider the flow of control as these functions are called.
+위에 언급된 함수들은 2가지 종류로 나누어집니다. - 접근형 함수와 유틸리티형입니다. Let us consider the flow of control as these functions are called.
 
 Access 함수들은 주로 컨트랙트 배포 후에 데이터를 가져오는 역할을 합니다. name(), symbol(), totalSupply() 그리고 balanceOf(acc) 와 같은 함수들은 이러한 정보들을 체인으로부터 정보를 취하는 기능들을 모아놓은 Storage API의 get() 함수를 사용하여 수집합니다. 실제 프로그램 논리구조에서는 어떤식으로 적용되는지 한번 살펴봅시다.
 
@@ -168,7 +168,7 @@ Access 함수들은 주로 컨트랙트 배포 후에 데이터를 가져오는 
 
 balanceOf() 함수는 1개의 인수만을 받습니다. 계정을 나타내는 Base58 주소 입니다. 해당 인수에 대해서 길이 검사를 하고 유효하지 않다면 예외 처리를 하는 유효성 검사도 있습니다. 만약에 주소가 유효하다면 get() 함수가 2개의 인수들과 함께 호출됩니다. 2개의 인수는 BALANCE\_PREFIX을 접두로 가진 계정 주소와 context 입니다.
 
-The context allows for data reference on the chain to fetch the account balance value, while the prefixed account address ensures authenticated access. Next, get() returns this data to Main() where it is output to the log window using the notify() function. The totalSupply() function works in a similar fashion.
+context는  The context allows for data reference on the chain to fetch the account balance value, while the prefixed account address ensures authenticated access. 다음으로, get()은 해당 데이터를 Main()으로 반환하고 notify() 함수를 이용하여 로그 윈도우창에 결과값을 출력합니다. totalSupply() 함수도 비슷한 방식으로 작동합니다.
 
 알림：잔액 및 approve prefixes 은 ASCII 형식의 16진수 값이며 당신의 프로그램 논리 구조에 맞게 변경될 수 있습니다.
 
@@ -190,19 +190,19 @@ The transfer() 함수는 토큰을 한 계정에서 다른 계정으로 전송�
 
 만약에 잔고와 거래량이 정확히 일치한다면 보내는 사람의 계정 잔고는 0으로 설정됩니다. 이때 보내는 사람의 주소의 접두사를 이용하여 delete() 방법이 호출됩니다. 실질적으로 put() 방법을 사용하여 보내는 사람의 계좌 잔고를 0으로 만드는 것과 같은 결과를 내기는 하지만 put() 밥ㅇ법을 사용한다면 보안상 취약점이 나타날 수 있어서 delete() 방법을 사용하였습니다. 
 
-만약 잔고가 거래량보다 높다면, the amount is deducted from the balance by making a put() call and updating the sender accounts balance with the deducted value.
+만약 잔고가 거래량보다 높다면, put() 호출을 통해서 해당량만큼 잔고에서 차감하고 차감후 그 결과량으로 보내는 사람의 잔고를 업데이트합니다. 
 
 다음으로, BALANCE\_PREFIX를 접두로 둔 받는 사람의 주소는 받는 사람의 계좌잔고에 거래량을 더하는 과정에서 사용됩니다. 
 
 마지막으로, 해당 거래는 RegisterAction() 함수를 사용하여 체인에 전송되고 원장에 기록됩니다.
 
-TransferEvent is the alias that RegisterAction() uses here. RegisterAction() is a method of the Action API and it takes four arguments that are transferred to the chain in order to record transaction details. The transaction hash and certain other details are output in the logs section.
+TransferEvent 는 해당과정에서 RegisterAction()이 사용하는 별칭이라고 생각하면 됩니다. RegisterAction()은 Acition API에 속해있으며 거래의 세부사항을 기록하고 체인에 전송되는 4개의 인수를 취합니다. 거래 해시값과 특정 몇가지 다른 결과값들은 로그 섹션에서 확인할 수 있습니다.
 
  **transferMulti()** 도 비슷한 방법으로 작동합니다. transferMulti()가 실행되면 transfer()를 호출하기에 기본적인 논리구조는 거의 비슷합니다, 하지만 차이점이 있다면 여러 개의 거래가 동시에 처리된다는 점입니다. 인수는 nested array 1개를 필요로 합니다.
 
 ![](media/image17.jpg){width="5.2551924759405075in" height="1.7727274715660541in"}
 
-The sub-array elements are processed in sets of three such that the first and second elements still represent the sender's and receiver's addresses, and the third element represents the transfer amount. The sub arrays are iterated till there are no more elements left in the args\[\] array.
+sub-array 요소는 3개의 세트로 구성됩니다. 첫번째와 두번째는 보내는 사람과 받는 사람의 주소이고, 세번째는 거래량입니다. The sub arrays are iterated till there are no more elements left in the args\[\] array.
 
 만약에 sub-array가 3개의 인수를 포함하지 않거나 이전 거래가 특정 이유로 인하여 실패하였다면 예외처리가 됩니다. 예외처리가 되면 통제권은 loop에서 나와 Main()으로 넘어갑니다.
 
@@ -210,7 +210,7 @@ The sub-array elements are processed in sets of three such that the first and se
 
 ![](media/image18.jpg){width="5.208333333333333in" height="3.1166666666666667in"}
 
-The approve function implements another complex logic wherein an account, namely the "spender" is given the permission to utilize a certain amount in tokens from another account, namely the "owner".
+The approve 함수는 또다른 복잡한 논리구조를 구현한 것입니다. 바로 "소비자(spender)"가 다른 계정, "소유자(owner)"의 특정량만큼의 토큰을 사용할 수 있는 허가를 받는 것입니다.
 
 해당 함수는 2가지 검사를 진행합니다. 길이로 유효성 검사를 진행하고, 승인을 실행할 수 있는 “소유자”여부로 사용자 검사를 진행합니다.
 
@@ -228,13 +228,13 @@ The approve function implements another complex logic wherein an account, namely
 
 transferFrom() 함수는 더 복잡한 논리구조를 실행합니다. 이는 특정 어플리케이션에서 유용하게 사용될 수 있을것입니다.
 
-해당함수에서는 spender라고 불리우는 제3자를 허용합니다. This function allows a third party, namely the spender, to utilize a certain amount in tokens that are provided from an account that does not designate to their own credentials, basically implementing the same logic as that of the approve() function. 4개의 인수를 받는다. 3개는 Byte58 주소이고 1개는 전송량이다.
+해당함수에서는 spender라고 불리우는 제3자를 허용합니다. This function allows a third party, namely the spender, to utilize a certain amount in tokens that are provided from an account that does not designate to their own credentials, 원칙적으로 approve() 함수와 같은 논리구조를 사용한다고 보면 될 것입니다. 4개의 인수를 받는다. 3개는 Byte58 주소이고 1개는 전송량이다.
 
 먼저, 함수는 주소의 유효성 검사를 실행합니다. 후에 소비자에게 Runtime API의 일부인 CheckWitness()함수를 사용하여 이 거래를 실행할 권한이 있는지 확인합니다.  
 
-Next, the balance of the "from" account is fetched and cross-checked with the transaction amount to ensure the account has enough balance. The process to fetch the balance remains the same.
+다음으로, "보낸 사람"의 계정 잔고를 가져와 거래량과 비교한 후에 충분한 잔고가 있는지를 확인합니다. 잔고 정보를 가져오는 과정은 니다. 
 
-The spender's address is then prefixed with the APPROVE\_PREFIX and the approved amount from is fetched using the prefixed address.
+소비자의 주소는 APPROVE\_PREFIX를 접두로 붙고 승인된 금액은 접두사 주소를 사용(참조)하여 가져옵니다. 
 
 거래는 그 후에 실행됩니다. 만약 거래 금액이 승인된 금액을 초과한다면, 거래는 중지되고(aborted) 통제권은 Main()함수에게 돌아가게 됩니다. 
 
@@ -248,9 +248,9 @@ Another function that implements a similar logic has be defined as **allowance(o
 
 ![](media/image20.jpg){width="4.633333333333334in" height="1.1666666666666667in"}
 
-Practically speaking, this function cam be classified as an access function too in the sense that it returns the allowance value. But it also performs a get() query to fetch this result from the chain.
+굳이 말하자면, 해당 함수는 allowance 값을 받아온다는 점에서 access형 함수로 분류될 수 있습니다. 그러나 get() 쿼리를 행하여 체인으로 부터 결과를 가져온다는 점에서 차이점이 있다고 할 수 있습니다. 
 
-A key generated by concatenating the prefixed owner address and the spender address is passed to the get() method along with the context to fetch the required allowance value, which is then returned to Main(). 이 값은 확인할 수 있으며 다른 작업에 사용될 수도 있습니다.
+접두를 가진 소유자의 주소와 소비자의 주소를 합쳐서 형성된 key는 get() 방법으로 context와 함께 전달되어 필요한 allowance 값을 가져오고, Main()으로 반환됩니다. 이 값은 확인할 수 있으며 다른 작업에 사용될 수도 있습니다.
 
 5.  **배포와 테스팅**
 
@@ -266,7 +266,7 @@ compile 탭에 보이는, AVM 바이트 코드는 컴파일 후에 생성된 중
 
 The opcode indicates the stack status line by line; an advanced debugging tool.
 
-ABI stores the parameter information for all the functions and the contract hash itself. The contract ABI can be saved for future retrieval.
+ABI는 모든 함수의 매개변수 및 컨트랙트 해시 그 자체를 저장합니다. 컨트랙트 ABI는 추후에 검색을 하는데 사용이됩니다. 
 
 ![](media/image23.jpg){width="7.268055555555556in" height="0.47727252843394574in"}
 
@@ -276,11 +276,11 @@ The logs section displays the compilers response which includes everything from 
 
 ![](media/image24.jpg){width="5.091666666666667in" height="6.133333333333334in"}
 
-Here, we fill in the relevant information regarding the contract and proceed. A confirmation window pops up where you can enter the gas price and gas limit.
+여기서, 컨트랙트에 대한 정보를 입력합니다. 가스 값과 가스 한계값을 입력할 수 있는 창이 나타납니다.
 
 **알림: 가스 한계는 정확히 소수점 9자리까지 포함됩니다. 그렇기에, 10^9^ 가스 unit은 1 ONG 토큰과 일치한다고 볼 수 있습니다. 표현할 수 있는 값 중 가장 작은 값은 0.000000001 입니다.**
 
-**The wallet automatically sets a suitable limit based on the complexity of the code being compiled and run. But you always have the option to set a limit yourselves. Ensure that limit is higher than the cost, otherwise the contract may fail to deploy or invoke.**
+**지갑은 컴파일하고 실행될 코드의 복잡성에 기반하여 적절한 한계값을 자동으로 설정합니다. 하지만 그 한계값을 사용자가 스스로 결정할수도 있습니다. 한계값이 비용보다 높은지 확인하십시오. 그렇지 않다면 컨트랙트의 배포 및 호출 행위는 수행되지 않을 것입니다. **
 
 ![](media/image25.jpg){width="1.9874278215223098in" height="3.113636264216973in"}
 
@@ -290,11 +290,11 @@ Here, we fill in the relevant information regarding the contract and proceed. A 
 
 다음으로, 이제는 컨트랙트를 실행하려고 합니다. 
 
-Before executing other functions, we must first initialize the wallet using init() so as to ensure that it has enough balance to carry out transactions.
+다른 함수들을 실행하기 전에, 먼저 지갑의 초기값 설정을 해야합니다. 이때 init()함수를 사용하며 거래를 실행하는데 있어서 충분한 양의 잔고가 있는지를 확인합니다.  
 
-We can then choose the function that we want to execute from the drop-down menu.
+후에 drop-down 메뉴에서 실행할 함수를 선택할 수 있습니다. 
 
-At this point we have two options, pre-run and run. We can choose to directly run the contract, and the engine would run the AVM code generated before. Pre-run is an option which can be chosen to test run the contract to check if it runs as expected. There is no gas cost associated with pre-running a contract.
+이 부분에서 우리는 2가지의 선택권이 있습니다. pre-run 혹은 run 입니다. 바로 컨트랙트 코드를 실행시키고, 엔진을 AVM코드가 생성되기 전에 실행시킬 수 있습니다. Pre-run은 컨트랙트 코드를 테스팅할 때 선택할 수 있는 방법이고 해당 코드가 잘 작동하는지를 확인하는데에 사용됩니다. 컨트랙트 코드를 pre-run 할 때에는 가스 값이 요구되지 않습니다.
 
 We can select the function that we want to execute from the drop-down menu, select the data type of the value to be passed and pass the argument in the blank field.
 
@@ -302,7 +302,7 @@ We can select the function that we want to execute from the drop-down menu, sele
 
 ![](media/image27.jpg){width="7.268055555555556in" height="0.5909087926509187in"}
 
-All the results that are displayed in the logs section are in hexadecimal format. The tool option in the right-side pane provides several different conversion tools that are at the user's disposal which can be used to perform data conversions and a few other functions.
+로그 섹션에 나타나는 모든 결과는 16진수 형태입니다. 오른쪽 창의 도구(tool) 옵션은 데이터 변환 및 몇가지 기능을 수행하는데 사용되는 다양한 변환 도구를 제공합니다.
 
 ![](media/image28.jpg){width="4.983333333333333in" height="6.258333333333334in"}
 
@@ -310,32 +310,31 @@ All the results that are displayed in the logs section are in hexadecimal format
 
 ![](media/image29.jpg){width="5.108333333333333in" height="5.408333333333333in"}
 
-Once you run the contract, you will be prompted to confirm the transaction and enter the gas price and gas limit that will used to calculate the gas which the contract consumes in its execution process.
-(ONG)
+컨트랙트를 실행시키면, 거래를 확인하라는 메세지가 표시됩니다. 계약을 실행하는데 있어서 사용될 가스 가격 및 가스 한도를 입력하라는 메세지가 표시됩니다. (ONG)
 
-가스 가격과 가스 리밋을 입력합니다. 거래가 성공적으로 전달이 되면 거래 해시갑이 로그 섹션에 나타날 것입니다.
+가스 가격과 가스 한도를 입력합니다. 거래가 성공적으로 전달이 되면 거래 해시갑이 로그 섹션에 나타날 것입니다.
 
 ![](media/image30.jpg){width="7.268055555555556in" height="0.5875in"}
 
-To see the current balance of the account that we transferred the tokens to, we can pre-run the balanceOf() function. We pre-run it because we want to see the output of the function. Running it directly would execute it, but we will not be able to see the value returned.
+balanceOf() 함수를 pre-run하면, 우리가 토큰을 전송한 계정의 현재 잔고를 확인할 수 있습니다. 우리는 함수의 결과값을 보고 싶기에 pre-run을 합니다. 직접 실행을 한다면 실행은 되지만, 값을 반환하지는 않습니다.
 
 ![](media/image31.jpg){width="7.268055555555556in" height="0.7659722222222223in"}
 
-Clearly, 50 units of our sample token have been transferred to the receiver's address. The displayed value 32 is the hexadecimal value.
+10진수 기준 50개의 샘플 토큰이 받는 사람의 주소로 전송되었습니다. 표시된 32라는 값은 16진수 값입니다. 
 
 ![](media/image32.jpg){width="4.925in" height="1.6583333333333334in"}
 
-이 16진수 형태 값(hex value)을 tools 섹션에 제공된 변환기(converter)를 통하여 decimal 값으로 변환할 수 있습니다. 
+이 16진수 형태 값(hex value)을 tools 섹션에 제공된 변환기(converter)를 통하여 10진수 값으로 변환할 수 있습니다. 
 
 거래 해시 값은 나중에 탐색기에서 거래 세부사항을 보는데에 사용될 수 있습니다. 
 
 ![](media/image33.jpeg){width="7.268055555555556in" height="3.454861111111111in"}
 
-The last section in the right-hand pane, Restful, is the API that is used to communicate with the chain to fetch useful information regarding the chain's status, such as the current block height or the smartcode for an event. Smartcode 는 사실상 스마트 컨트랙트 정보를 JSON기반으로 표현한 것이다. JSON 은 쿼리를 기반으로 생성되고 반환되며 이때 함수들은 Restful API로 호출된다.
+오른쪽 창의 마지막 섹션은 Restful한 API입니다. API는 현재 블록높이 이벤트에 대한 Smartcode와 유용한 체인의 상태 정보를 불러오는 행위 등 통신하는데에 사용됩니다. Smartcode 는 사실상 스마트 컨트랙트 정보를 JSON기반으로 표현한 것입니다. JSON 은 쿼리를 기반으로 생성되고 반환되며 이때 함수들은 Restful API로 호출됩니다.
 
 ![](media/image34.jpg){width="4.25in" height="5.99959864391951in"}
 
-The transaction hash can be used to fetch the smartcode for the respective transaction.
+거래 해시값은 거래 각각의 Smartcode를 가져오는데에 사용됩니다. 
 
 Restful API는 SDK를 통해서도 접근 및 사용할 후 있습니다. SDK 통합 방법 관련 튜토리얼은 다른 글에서도 확인하실 수 있습니다.
 
