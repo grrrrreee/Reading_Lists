@@ -138,7 +138,7 @@ Main()에 전달된 인수에 따라서 호출될 수 있는 함수는 11가지 
 
 -   **decimals() :** 유효한 토큰 값을 정확하게 소수점까지 반환합니다, 이 경우에는 8자리입니다.
 
--   **totalSupply() :** 초기값 설정 때 배정된 토큰 총량을 반환한다. 순환에 할당된 고정된 숫자를 반환합니다. (Uses SUPPLY\_KEY to fetch the value from the chain, stored earlier during initialization)
+-   **totalSupply() :** 초기값 설정 때 배정된 토큰 총량을 반환한다. 순환에 할당된 고정된 숫자를 반환합니다. (SUPPLY\_KEY 를 사용하여 초기값 설정을 하는 과정에서 이전에 저장된 값들을 체인에서 불러옵니다.)
 
 -   **balanceOf(acct) :** 함수에 인수로 전달된 Base58 주소로 식별되는 계정의 잔고에 해당하는 금액을 불러옵니다. 
 
@@ -168,9 +168,9 @@ Access 함수들은 주로 컨트랙트 배포 후에 데이터를 가져오는 
 
 balanceOf() 함수는 1개의 인수만을 받습니다. 계정을 나타내는 Base58 주소 입니다. 해당 인수에 대해서 길이 검사를 하고 유효하지 않다면 예외 처리를 하는 유효성 검사도 있습니다. 만약에 주소가 유효하다면 get() 함수가 2개의 인수들과 함께 호출됩니다. 2개의 인수는 BALANCE\_PREFIX을 접두로 가진 계정 주소와 context 입니다.
 
-context는  The context allows for data reference on the chain to fetch the account balance value, while the prefixed account address ensures authenticated access. 다음으로, get()은 해당 데이터를 Main()으로 반환하고 notify() 함수를 이용하여 로그 윈도우창에 결과값을 출력합니다. totalSupply() 함수도 비슷한 방식으로 작동합니다.
+context는 데이터 참조가 계정의 잔고를 가져오도록 허용하며, 접두를 붙인 계정 주소는 접근 권한을 허용합니다. 다음으로, get()은 해당 데이터를 Main()으로 반환하고 notify() 함수를 이용하여 로그 윈도우창에 결과값을 출력합니다. totalSupply() 함수도 비슷한 방식으로 작동합니다.
 
-알림：잔액 및 approve prefixes 은 ASCII 형식의 16진수 값이며 당신의 프로그램 논리 구조에 맞게 변경될 수 있습니다.
+알림：잔액 및 허용 접두부(approve prefixe)는 ASCII 형식의 16진수 값이며 당신의 프로그램 논리 구조에 맞게 변경될 수 있습니다.
 
 샘플 코드에 있는 유틸리티형 함수를 살펴보겠습니다. 
 
@@ -184,11 +184,11 @@ The transfer() 함수는 토큰을 한 계정에서 다른 계정으로 전송�
 
 해당 함수는 간단한 길이 검사로 검증을 진행하지만, 원한다면 더 복잡한 논리구조를 개발 및 구현할 수 있습니다. 
 
-다음으로 BALANCE\_PREFIX 가 보내는 사람의 계정 주소와 합쳐집니다. and balance is retrieved by making a get() call using this address. 다음으로 계정의 잔고와 전송될 금액의 비교가 빠르게 이루어집니다. 아래에 3가지 시나리오 모두 명확하게 정의되어 있습니다.
+다음으로 BALANCE\_PREFIX 가 보내는 사람의 계정 주소와 합쳐집니다. 그리고 get() 호출은 계정 주소를 사용하여 잔액정보를 가져옵니다. 다음으로 계정의 잔고와 전송될 금액의 비교가 빠르게 이루어집니다. 아래에 3가지 시나리오 모두 명확하게 정의되어 있습니다.
 
 만약에 잔고가 거래량보다 적다면, 거래는 실패하게 되고 통제권은 바로 Main() 으로 넘어가게 됩니다. 
 
-만약에 잔고와 거래량이 정확히 일치한다면 보내는 사람의 계정 잔고는 0으로 설정됩니다. 이때 보내는 사람의 주소의 접두사를 이용하여 delete() 방법이 호출됩니다. 실질적으로 put() 방법을 사용하여 보내는 사람의 계좌 잔고를 0으로 만드는 것과 같은 결과를 내기는 하지만 put() 밥ㅇ법을 사용한다면 보안상 취약점이 나타날 수 있어서 delete() 방법을 사용하였습니다. 
+만약에 잔고와 거래량이 정확히 일치한다면 보내는 사람의 계정 잔고는 0으로 설정됩니다. 이때 보내는 사람의 주소의 접두사를 이용하여 delete() 방법이 호출됩니다. 실질적으로 put() 방법을 사용하여 보내는 사람의 계좌 잔고를 0으로 만드는 것과 같은 결과를 내기는 하지만 put() 법을 사용한다면 보안상 취약점이 나타날 수 있어서 delete() 방법을 사용하였습니다. 
 
 만약 잔고가 거래량보다 높다면, put() 호출을 통해서 해당량만큼 잔고에서 차감하고 차감후 그 결과량으로 보내는 사람의 잔고를 업데이트합니다. 
 
@@ -228,7 +228,8 @@ The approve 함수는 또다른 복잡한 논리구조를 구현한 것입니다
 
 transferFrom() 함수는 더 복잡한 논리구조를 실행합니다. 이는 특정 어플리케이션에서 유용하게 사용될 수 있을것입니다.
 
-해당함수에서는 spender라고 불리우는 제3자를 허용합니다. This function allows a third party, namely the spender, to utilize a certain amount in tokens that are provided from an account that does not designate to their own credentials, 원칙적으로 approve() 함수와 같은 논리구조를 사용한다고 보면 될 것입니다. 4개의 인수를 받는다. 3개는 Byte58 주소이고 1개는 전송량이다.
+해당함수에서는 spender라고 불리우는 제3자를 허용합니다. 이 기능을 사용하면 소비자가 자격증명을 하도록 선정되지 않은 계정의 일정량의 토큰을 사용할 수 있게 합니다.  
+원칙적으로 approve() 함수와 같은 논리구조를 사용한다고 보면 될 것입니다. 4개의 인수를 받습니다. 3개는 Byte58 주소이고 1개는 전송량입니다.
 
 먼저, 함수는 주소의 유효성 검사를 실행합니다. 후에 소비자에게 Runtime API의 일부인 CheckWitness()함수를 사용하여 이 거래를 실행할 권한이 있는지 확인합니다.  
 
@@ -264,13 +265,13 @@ Another function that implements a similar logic has be defined as **allowance(o
 
 compile 탭에 보이는, AVM 바이트 코드는 컴파일 후에 생성된 중 간결과물입니다. NEOVM 은 이 AVM 코드를 처리하여 계약을 실행합니다.
 
-The opcode indicates the stack status line by line; an advanced debugging tool.
+opcode 는 스택 상황을 줄단위로 지시합니다 ; 발전된 형태의 디버깅 툴입니다. 
 
 ABI는 모든 함수의 매개변수 및 컨트랙트 해시 그 자체를 저장합니다. 컨트랙트 ABI는 추후에 검색을 하는데 사용이됩니다. 
 
 ![](media/image23.jpg){width="7.268055555555556in" height="0.47727252843394574in"}
 
-The logs section displays the compilers response which includes everything from debugging results to the information that the VM returns.
+로그 섹션은 디버깅 결과부터 VM이 반환하는 결과까지 다양한 컴파일러 결과를 보여줍니다.
 
 컴파일 결과 나타나는 오류가 모두 수정되거나 해결된 후에, 컴파일을 성공하면 이제 해당 컨트랙트는 배포될 수 있습니다.
 
