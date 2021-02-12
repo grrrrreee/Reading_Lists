@@ -6,7 +6,7 @@ Compound(COMP)는 2018년에 설립된 이래로 가장 유명한 Defi 대출 �
 
 지난 2020년 8월 10일, 성장하는 프로젝트에 대해서 설명하였다. At the time, the Aave share price was still trading under the acronym LEND and reached a market capitalization of $500 million in no time, and even then we wondered if a compound killer had been born with AAVE. Less than half a year later, its market capitalization has increased eightfold to more than 6 billion US dollars.
 
-In terms of performance, the AAVE share price has thus surpassed that of COMP by a long way. This young year, the COMP share price started at about $145, while the AAVE share price was about $88. Currently, both the COMP and AAVE share prices are trading at around $500. This means that the challenger has grown by over 450% since the beginning of January, while COMP has seen a comparatively small (but still impressive) growth of 240%.
+AAVE의 가격은 COMP의 가격을 넘겼다. 올해 COMP는 $145에서 시작하였고 AAVE는 $88에서 시작하였다. 현재 COMP와 AAVE는 모두 $500 근처에서 거래되고 있다. 이 말은 AAVE는 1월 이후 약 450% 상승한 것이고 COMP는 240% 정도 상승했다는 것이다. (물론, 이도 대단한 것이다.)
 
 Image for post
 
@@ -50,11 +50,11 @@ Dune Analytics에 의하면 unique wallet 기준으로 Compound가 여전히 Aav
 
 Image for post (Evolution of the number of wallets at Compound. Source: Dune Analytics)
 
-물론 이 metric은 이론적으로 사용자가 1개 이상의 지갑을 가질 수 있기에 조심스럽게 받아들여야한다. Therefore, it is possible that this metric is artificially inflated and cannot be transferred 1 to 1 to the number of actual users. 그럼에도 불구하고 중요한 metric이기는하다. Compound는 300,000개가 넘는 지갑 주소가 있으나 Aave는 40,000개 이하의 주소가 있다. (Note: Dune Analytics data may only include V1 users. If V2 users were included, the number would possibly increase).
+물론 이 metric은 조심스럽게 받아들여야한다. 이론적으로 사용자가 1개 이상의 지갑을 가질 수 있기에 이 metric은 의도적으로 상승되었을수도 있고 지갑의 숫자와 실제 사용자의 숫자가 일치하지 않을수도 있다. 그럼에도 불구하고 중요한 metric이기는하다. Compound는 300,000개가 넘는 지갑 주소가 있으나 Aave는 40,000개 이하의 주소가 있다. (Note: Dune Analytics data may only include V1 users. If V2 users were included, the number would possibly increase).
 
 Image for post (Evolution of the number of wallets at Aave. Source: Dune Analytics)
 
-While Aave launched more than a year after Compound in late 2018, both protocols saw the bulk of their user growth in 2020. The challenger started from scratch and saw a relatively steady influx of users that continues to this day. On the other hand, compound started with about 22,000 addresses in January 2020 but then experienced a massive jump from 50,000 addresses to nearly 300,000 from mid-October to the end of December. Since the beginning of 2021, however, Compound’s user growth (about +5,000) has fallen below Aave’s (about +6,000). Accordingly, a reversal of the trend may be evident here.
+While Aave launched more than a year after Compound in late 2018, 두 프로토콜 모두 2020년에 사용자 측면에서 엄청난 발전을 이루어냈다. Aave는 바닥부터 시작하여 상대적으로 안정적인 유저 유입을 이루어내고 있고 그 유입은 오늘날까지 이어지고 있다. 반면, compound는 2020년 1월 약 22,000개의 주소로 시작하였다. 그 후 50000개까지 늘어났고 이내 300000개로 엄청난 발전을 10월 중반부터 12월말까지 이루어 냈다. 하지만 2021년에 들어서면서 Compound의 사용자 증가(약 5000개)는 Aave(약 6000개)보다 더디어졌다. Accordingly, a reversal of the trend may be evident here.
 
 https://medium.com/coinmonks/uniswap-vs-sushiswap-d326860b0084
 
@@ -76,13 +76,13 @@ I’m looking forward to seeing how the unprecedented debt numbers develop when 
 
 2개 모두 개념상으로는 비슷한 프로토콜이지만, 도전자 입장인 Aave가 더 많고 빠른 서비스들을 제공하며 더 혁신적으로 다가서고 있다. Aave는 20개가 넘는 자산들에 대해서 서비스를 제공하고 있으나 Compound는 오직 11개만 제공한다. Aave는 Compound는 제공하지 않는 더 안정적인 이자를 제공한다.
 
-Aave는 DeFi에서 혁신을 이끌어왔다. 대표적으로 flash loan과 delegated loan vault가 있다. In December, Compound announced plans to launch Compound Chain, a standalone blockchain that would offer money market functionality across multiple chains. However, the announcement of the exact launch date has so far remained elusive.
+Aave는 DeFi에서 혁신을 이끌어왔다. 대표적으로 flash loan과 delegated loan vault가 있다. 12월에 Compound는 Compound Chain을 런칭할 것이라고 하였다. Compound Chain은 standalone 블록체인으로 여러 체인에 거쳐 머니 마켓 기능을 제공한다. 그러나, 정확한 출시일은 아직 공개되지 않았다.
 
 Compound’s founder, Robert Leshner, did not comment on specific numbers. He was diplomatic, however, saying:
 
 Compound와 Aave는 모두 모멘텀을 키워가고 있다; 2021년은 2개의 프로토콜 모두에게 의미있는 한 해가 될 것이다.
 
-So far, he has been proven right.
+지금까지는 그가 옳은 말을 한 것 같다.
 
 ### Conclusion
 
