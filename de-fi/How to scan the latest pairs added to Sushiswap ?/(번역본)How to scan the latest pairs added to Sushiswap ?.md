@@ -6,7 +6,7 @@ Update: for those interested on having the latest pairs for Uniswap -> go Here
 
 ### What is Sushiswap ?
 
-SushiSwap은 이더리움에서 작동하는 소프트웨어로 이를 작동하게 하기 위해 암호 자산을 사고 파는 네트워크 사용자들에게 인센티브를 주려고한다.  Similar to platforms like Uniswap and Balancer, SushiSwap uses a collection of liquidity pools to achieve this goal. Users first lock up assets into smart contracts, and traders then buy and sell cryptocurrencies from those pools, swapping out one token for another.
+SushiSwap은 이더리움에서 작동하는 소프트웨어로 이를 작동하게 하기 위해 암호 자산을 사고 파는 네트워크 사용자들에게 인센티브를 주려고한다. Uniswap과 Balancer처럼 SushiSwap은 유동성 풀의 집합체이다. 사용자들은 먼저 스마트 컨트랙트에 자산을 lock 해놓고 trader들이 그 후에 그 pool로부터 암호화폐들을 사고팔고 한 토큰을 다른 토큰으로 바꾼다.
 
 수많이 생성되는 DeFi 플랫폼 중 하나인 SushiSwap은 중앙화된 운영주체 없이 암호자산을 거래할 수 있게 해준다.
 
@@ -28,11 +28,9 @@ image
 
 ACCESS LIVE TEMPLATE SHEET HERE
 
-The sheet returns all new tradable pairs on Sushiswap and Uniswap, giving constraints on the Number of Days the pair has been active, the Volume ($), the Liquidity ($), and the number of Transactions.
-
 image
 
-In order to get Sushiswap’s analytics I used The Graph which is an indexing protocol for querying networks like Ethereum and IPFS. 누구나 usbgraph라는 Open API를 사용할 수 있고, 만들거나 배포할 수 있다. 이를 통해서 데이터를 더 쉽게 접근할 수 있게 만들 수 있다.
+Sushiswap의 분석툴에 The Graph를 사용했다. The Graph는 indexing protocol로 이더리움이나 IPFS같은 네트워크에 쿼리하는데에 사용된다. 누구나 usbgraph라는 Open API를 사용할 수 있고, 만들거나 배포할 수 있다. 이를 통해서 데이터를 더 쉽게 접근할 수 있게 만들 수 있다.
 
 image
 
@@ -49,25 +47,25 @@ image
 
 식은 다음과 같이 작성하면 된다: =SUSHISWAP(4,5000,10000,200)
 
-@param {days} the number of Days since the pair is active
-@param {volume} the minimum Volume ($)
-@param {liquidity} the minimum Liquidity ($)
-@param {tx_count} the number of Transactions existant since creation
+@param {days} 페어가 활성화된 이후 날의 수
+@param {volume} 최소 Volume ($)
+@param {liquidity} 최소 유동량 ($)
+@param {tx_count} 생성 이후 존재하는 거래의 수
 
-* @return a table (see GIF above)with all new tradable pairs on Uniswap and their number of Days since Active, the Volume ($), the Liquidity ($), the number of Transactions.
+* @ Uniswap에서 거래 가능한 페어들, 활성화된 이후 날의 수, Volume, 유동량 그리고 거래의 숫자와 함께 표를 반환한다. 
 
 ### More indicators for scanning ?
 
-There are plenty more functionalities that can be added through the TheGraph API. Don’t hesitate to have a look at all available end points like:
+Graph API를 통해서 추가될 수 있는 기능들은 훨씬 많다. 아래와 같은 endpoint들도 사용될 수 있다:
 
 image 
 
-- totalSupply
-- untrackedVolumeUSD
--  liquidityProviderCount
+- 전체 공급량 (totalSupply)
+- 추적되지 않는 총액 (untrackedVolumeUSD)
+- liquidityProviderCount
 
-If you are interested in getting some help in integrating more personalized indicators, DM me.
+또 다른 인자들을 더하고 싶다면 직접 연락해주세요.
 
 ### Conclusion
 
-An easy accessible way to get the latest pairs on Sushiswap using Google Sheets which can be used for data analytics, and as a trading tools for screening of new market participants.
+구글 시트를 사용하여 Sushiswap에서 거래할 수 있는 가장 최근의 페어를 얻을 수 있는 쉬운 방법과 새로운 시장 참가자들을 관찰 및 분석할 수 있는 툴을 만들어보았다.
