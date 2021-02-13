@@ -37,17 +37,17 @@ In order to get Sushiswap’s analytics I used The Graph which is an indexing pr
 image
 
 SUSHISWAP FUNCTION IN GOOGLE SHEETS:
-코인이 활성화된 일수, 규모($), 유동성($) 그리고 거래 숫자를 기반으로 Sushiswap에서 새롭게 거래될 수 있는 pair를 반환한다.
+코인이 활성화된 일수, 규모($), liquidity($) 그리고 거래 숫자를 기반으로 Sushiswap에서 새롭게 거래될 수 있는 pair를 반환한다.
 
 image
 
-For example, if I want to get the new Sushiswap pairs where:
-- the pool was launched in the last 4 Days
-- the daily Volume is greater than $5'000
--  the Liquidity is above $10'000
-and there has been more than 200 Transactions since the launch
+예를 들어, 새로운 Sushiswap pair를 보고 싶다면 아래와 같은 조건을 만족하면 된다 :  
+- 지난 4일 안에 pool이 열려야 한다. 
+- 하루 거래량이 $5,000보다는 커야 한다. 
+- Liquidity는 $10,000보다는 커야 한다. 
+그리고 런칭이 된 이후에 200개 이상의 거래가 이뤄졌어야 한다. 
 
-The formula becomes: =SUSHISWAP(4,5000,10000,200)
+식은 다음과 같이 작성하면 된다: =SUSHISWAP(4,5000,10000,200)
 
 @param {days} the number of Days since the pair is active
 @param {volume} the minimum Volume ($)
