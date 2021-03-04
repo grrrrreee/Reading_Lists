@@ -10,7 +10,7 @@ import (
 
 func main() {
 	from_email := "greedycatty@gmail.com"
-	password := "hdws1927"
+	password := "..."
 	host := "smtp.gmail.com:587"
 	auth := smtp.PlainAuth("", from_email, password, "smtp.gmail.com")
 
