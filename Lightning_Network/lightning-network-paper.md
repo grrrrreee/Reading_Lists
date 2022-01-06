@@ -6,6 +6,8 @@
 
 #### January 14, 2016 DRAFT Version 0.5.9.2
 
+*를 하는 것은 재해석이 필요한 것
+
 ### Contents 
 
 1. The Bitcoin Blockchain Scalability Problem
@@ -112,11 +114,11 @@ The  bitcoin  protocol  can  encompass  the  global  financial  transaction volu
 
 ## 1 The Bitcoin Blockchain Scalability Problem 
 
-The Bitcoin[1] blockchain holds great promise for distributed ledgers, but the blockchain as a payment platform, by itself, cannot cover the world’s commerce anytime in the near future. The blockchain is a gossip protocol whereby all state modifications to the ledger are broadcast to all participants. It is through this “gossip protocol” that consensus of the state, everyone’s balances, is agreed upon. If each node in the bitcoin network must know about every single transaction that occurs globally, that may create a significant drag on the ability of the network to encompass all global financial transactions. It would instead be desirable to encompass all transactions in a way that doesn’t sacrifice the decentralization and security that the network provides. 
+Bitcoin[1]은 그 분산원장으로서 엄청난 잠재력과 가능성을 지니고 있다. 하지만, 결제 플랫폼으로서는 가까운 미래에 전세계적인 수준의 거래양을 소화해낼 수는 없다.* 블록체인은 가십 프로토콜을 사용한다. 가십 프로토콜이라는 것은 모든 참여자들에게 원장에 상태 변화가 일어났다면 이를 알린다는 것이다. 대표적으로 모든 이의 잔고와 같은 상태에 대한 합의는 "가십 프로토콜"을 통하여 이루어진다. 만약 비트코인 네트워크의 모든 노드가 전역적으로* 발생하는 모든 각 거래의 정보를 전달 받는다면, 모든 전세계적인 금융 거래를 감당해내는 네트워크의 능력에 지장을 초래한다. 하지만 동시에 네트워크 자체가 제공하는 탈중앙화와 보안을 희생하지 않은 채, 모든 거래를 다룰 수 있는 방법을 찾는다면 이것이 바람직한 것일 것이다. 
 
-The payment network Visa achieved 47,000 peak transactions per second (tps) on its network during the 2013 holidays[2], and currently averages hundreds of millions per day. Currently, Bitcoin supports less than 7 transactions per second with a 1 megabyte block limit. If we use an average of 300 bytes per bitcoin transaction and assumed unlimited block sizes, an equivalent capacity to peak Visa transaction volume of 47,000/tps would be nearly 8 gigabytes per Bitcoin block, every ten minutes on average. Continuously, that would be over 400 terabytes of data per year.
+결제 네트워크 비자는 지난 2013년 연휴기간 동안 초당 47,000개의 거래를 감당해냈고[2], 현재는 평균 하루에 수억건의 거래를 다루고 있다. 현재, 비트코인은 초당 7개 이하의 거래를 지원하고 동시에 블록의 크기를 1MB로 제한한다. 만약에 거래 1개당 용량을 300 바이트라고 가정하고 블록의 크기에 제한이 없다고 한다면 비자와 같은 수준의 성능 즉, 초당 47000개의 거래를 비트코인이 처리해야한다면 10분당 8기가 바이트의 블록이 생성될 것이다. 이를 연단위로 계산해보면 400테라 바이트가 된다. 
 
-Clearly, achieving Visa-like capacity on the Bitcoin network isn’t feasible today. No home computer in the world can operate with that kind of bandwidth and storage. If Bitcoin is to replace all electronic payments in the future, and not just Visa, it would result in outright collapse of the Bitcoin network, or at best, extreme centralization of Bitcoin nodes and miners to the only ones who could afford it. This centralization would then defeat aspects of network decentralization that make Bitcoin secure, as the ability for entities to validate the chain is what allows Bitcoin to ensure ledger accuracy and security. 
+비자 수준의 능력을 비트코인 네트워크가 해낸다는 것은 사실상 불가능하다는 것은 명확하다. 세상 그 어느 가정용 컴퓨터도 이 정도 수준의 대역폭과 용량을 감당해낼 수 없다. 만약 비트콩닝 미래에 비자 뿐 아니라 모든 전자 결제를 대체한다면 비트코인 네트워크는 완전하게 붕괴할 것이고 기껏해야 엄청난 비용을 감당해낼 수 있는 자만이 노드를 운용하고 채굴을 하는 극도의 중앙화될 것이다. 하지만 비트코인이 중앙화되면 탈중앙화인 상태에서 각 주체들이 체인을 검증하여 원장의 정확성과 보안을 보장받는 장점이 상쇄된다. 
 
  Having fewer validators due to larger blocks not only implies fewer individuals ensuring ledger accuracy, but also results in fewer entities that would be able to validate the blockchain as part of the mining process, which results in encouraging miner centralization. Extremely large blocks, for example in the above case of 8 gigabytes every 10 minutes on average, would imply that only a few parties would be able to do block validation. This creates a great possibility that entities will end up trusting centralized parties. Having privileged, trusted parties creates a social trap whereby the central party will not act in the interest of an individual (principalagent problem), e.g. rentierism by charging higher fees to mitigate the incentive to act dishonestly. In extreme cases, this manifests as individuals sending funds to centralized trusted custodians who have full custody of customers’ funds. Such arrangements, as are common today, create severe counterparty risk. A prerequisite to prevent that kind of centralization from occurring would require the ability for bitcoin to be validated by a single consumer-level computer on a home broadband connection. By ensuring that full validation can occur cheaply, Bitcoin nodes and miners will be able to prevent extreme centralization and trust, which ensures extremely low transaction fees
 
